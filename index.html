@@ -224,7 +224,7 @@
     .btn-dedup.ativo { background: #64748b; color: #fff; border-color: transparent; }
 
     /* ============================================================ COLUNAS */
-    .colunas { display: flex; gap: 12px; padding: 12px; align-items: stretch; overflow-x: auto; overflow-y: hidden; flex: 1 1 0; min-height: 0; scroll-snap-type: x proximity; scroll-behavior: smooth; }
+    .colunas { display: flex; gap: 12px; padding: 12px; align-items: stretch; overflow-x: auto; overflow-y: hidden; flex: 1 1 0; min-height: 0; scroll-snap-type: x proximity; scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--accent) var(--bg-busca); }
     .colunas::-webkit-scrollbar { height: 8px; }
     .colunas::-webkit-scrollbar-track { background: var(--bg-busca); }
     .colunas::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; opacity: 0.7; }
@@ -269,7 +269,7 @@
     .coluna-header:active { cursor: grabbing; }
     .coluna-header h2 { margin: 0; font-size: 12px; pointer-events: none; font-weight: 700; letter-spacing: 0.01em; text-transform: uppercase; }
     .coluna-count { font-size: 10px; background: var(--bg-count); color: var(--text-count); padding: 2px 7px; border-radius: 20px; font-weight: 700; pointer-events: none; }
-    .coluna-body { flex: 1 1 0; min-height: 0; overflow-y: auto; overflow-x: hidden; }
+    .coluna-body { flex: 1 1 0; min-height: 0; overflow-y: auto; overflow-x: hidden; scrollbar-width: thin; scrollbar-color: var(--border-color) transparent; }
 
     .resize-handle { position: absolute; top: 0; right: 0; width: 5px; height: 100%; cursor: col-resize; z-index: 10; transition: background 0.15s; }
     .resize-handle:hover, .resize-handle.resizing { background: var(--accent); opacity: 0.5; }
