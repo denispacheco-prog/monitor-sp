@@ -408,8 +408,8 @@
       <div class="config-grupo">
         <label>Fileiras</label>
         <div class="config-opcoes">
-          <button class="config-btn ativo" data-config="fileiras" data-val="1" onclick="aplicarConfig(this)">1 fileira</button>
-          <button class="config-btn"       data-config="fileiras" data-val="2" onclick="aplicarConfig(this)">2 fileiras</button>
+          <button class="config-btn"       data-config="fileiras" data-val="1" onclick="aplicarConfig(this)">1 fileira</button>
+          <button class="config-btn ativo" data-config="fileiras" data-val="2" onclick="aplicarConfig(this)">2 fileiras</button>
         </div>
       </div>
       <div class="config-grupo">
@@ -446,192 +446,28 @@
     <button class="btn-scroll-nav" onclick="document.getElementById('colunas-container').scrollTo({left:0,behavior:'smooth'})" title="Ir para o início">◀◀</button>
     <button class="btn-scroll-nav" onclick="document.getElementById('colunas-container').scrollTo({left:99999,behavior:'smooth'})" title="Ir para o final">▶▶</button>
     <label>📋 Colunas:</label>
-    <button class="toggle-col-btn tipo-favoritos ativo" data-col="col-favoritos"   onclick="toggleColuna(this)">⭐ Favoritos</button>
-    <button class="toggle-col-btn tipo-noticias ativo"  data-col="col-diario"      onclick="toggleColuna(this)">🚇 Diário Transp.</button>
-    <button class="toggle-col-btn tipo-transporte ativo" data-col="col-trens"      onclick="toggleColuna(this)">🚉 Trens & Metrô</button>
-    <button class="toggle-col-btn tipo-transporte ativo" data-col="col-cet"        onclick="toggleColuna(this)">🚦 CET-SP</button>
-    <button class="toggle-col-btn tipo-transporte ativo" data-col="col-waze"       onclick="toggleColuna(this)">🗺️ Waze</button>
+    <button class="toggle-col-btn tipo-noticias ativo"   data-col="col-tv"         onclick="toggleColuna(this)">🌧️ Windy</button>
+    <button class="toggle-col-btn tipo-servicos ativo"   data-col="col-ar"         onclick="toggleColuna(this)">🌫️ Ar</button>
     <button class="toggle-col-btn tipo-servicos ativo"   data-col="col-clima"      onclick="toggleColuna(this)">🌦️ Clima</button>
     <button class="toggle-col-btn tipo-servicos ativo"   data-col="col-mananciais" onclick="toggleColuna(this)">💧 Mananciais</button>
-    <button class="toggle-col-btn tipo-infra ativo"      data-col="col-enel"       onclick="toggleColuna(this)">⚡ ENEL Luz</button>
-    <button class="toggle-col-btn tipo-transporte ativo" data-col="col-sptrans"    onclick="toggleColuna(this)">🚌 SPTrans</button>
-    <button class="toggle-col-btn tipo-noticias ativo"   data-col="col-tv"         onclick="toggleColuna(this)">🌧️ Windy</button>
-    <button class="toggle-col-btn tipo-transporte ativo" data-col="col-voos"        onclick="toggleColuna(this)">✈️ Voos</button>
-    <button class="toggle-col-btn tipo-noticias ativo"   data-col="col-assembleia" onclick="toggleColuna(this)">🏛️ AL-SP</button>
-    <button class="toggle-col-btn tipo-noticias ativo"   data-col="col-camara"     onclick="toggleColuna(this)">🏙️ Câmara SP</button>
     <button class="toggle-col-btn tipo-noticias ativo"   data-col="col-g1"         onclick="toggleColuna(this)">📰 G1 SP</button>
-    <button class="toggle-col-btn tipo-servicos ativo"   data-col="col-ar"         onclick="toggleColuna(this)">🌫️ Ar</button>
+    <button class="toggle-col-btn tipo-noticias ativo"   data-col="col-assembleia" onclick="toggleColuna(this)">🏛️ AL-SP</button>
+    <button class="toggle-col-btn tipo-noticias ativo"   data-col="col-diario"     onclick="toggleColuna(this)">🚇 Diário Transp.</button>
+    <button class="toggle-col-btn tipo-noticias ativo"   data-col="col-camara"     onclick="toggleColuna(this)">🏙️ Câmara SP</button>
+    <button class="toggle-col-btn tipo-transporte ativo" data-col="col-trens"      onclick="toggleColuna(this)">🚉 Trens & Metrô</button>
+    <button class="toggle-col-btn tipo-transporte ativo" data-col="col-cet"        onclick="toggleColuna(this)">🚦 CET-SP</button>
+    <button class="toggle-col-btn tipo-transporte ativo" data-col="col-sptrans"    onclick="toggleColuna(this)">🚌 SPTrans</button>
+    <button class="toggle-col-btn tipo-transporte ativo" data-col="col-waze"       onclick="toggleColuna(this)">🗺️ Waze</button>
     <button class="toggle-col-btn tipo-transporte ativo" data-col="col-rodovias"   onclick="toggleColuna(this)">🛣️ Rodovias</button>
+    <button class="toggle-col-btn tipo-transporte ativo" data-col="col-voos"       onclick="toggleColuna(this)">✈️ Voos</button>
+    <button class="toggle-col-btn tipo-infra ativo"      data-col="col-enel"       onclick="toggleColuna(this)">⚡ ENEL Luz</button>
+    <button class="toggle-col-btn tipo-favoritos"        data-col="col-favoritos"  onclick="toggleColuna(this)">⭐ Favoritos</button>
     <button class="btn-dedup" id="btn-dedup" onclick="toggleDedup()">⇄ Ocultar duplicatas</button>
   </div>
 
-  <div class="colunas" id="colunas-container">
+  <div class="colunas duas-fileiras" id="colunas-container">
 
-    <!-- FAVORITOS -->
-    <div class="coluna tipo-favoritos" id="col-favoritos" draggable="true">
-      <div class="resize-handle"></div>
-      <div class="coluna-header">
-        <h2>⭐ Favoritos <span class="col-status-icon" id="status-col-favoritos"></span></h2>
-        <div style="display:flex;align-items:center;gap:4px">
-          <button class="btn-marcar-lidos" onclick="marcarTodosLidos('col-favoritos')" title="Marcar todos como lidos">✓</button>
-          <span class="coluna-count" id="count-favoritos">—</span>
-        </div>
-      </div>
-      <div class="coluna-body">
-        <div id="favoritos-container" class="estado">Nenhum favorito ainda.<br><small style="opacity:0.6">Clique em ★ em qualquer item.</small></div>
-        <div id="sem-favoritos" class="sem-resultado">Nenhum resultado.</div>
-      </div>
-    </div>
-
-    <!-- DIÁRIO DO TRANSPORTE -->
-    <div class="coluna col-diario-sp tipo-noticias" id="col-diario" draggable="true">
-      <div class="resize-handle"></div>
-      <div class="coluna-header">
-        <h2>🚇 Diário do Transporte <span class="col-status-icon" id="status-col-diario"></span></h2>
-        <div style="display:flex;align-items:center;gap:4px">
-          <button class="btn-marcar-lidos" onclick="marcarTodosLidos('col-diario')" title="Marcar todos como lidos">✓</button>
-          <button class="btn-col-refresh" id="refresh-col-diario" onclick="refreshColuna('col-diario')" title="Atualizar">↻</button>
-          <span class="badge-nao-lido" id="nao-lidos-col-diario" style="display:none"></span>
-          <span class="coluna-count" id="count-diario">—</span>
-        </div>
-      </div>
-      <div class="coluna-body">
-        <div id="diario-container" class="estado">Carregando...</div>
-        <div id="sem-diario" class="sem-resultado">Nenhum resultado.</div>
-      </div>
-    </div>
-
-    <!-- TRENS & METRÔ -->
-    <div class="coluna tipo-transporte" id="col-trens" draggable="true">
-      <div class="resize-handle"></div>
-      <div class="coluna-header">
-        <h2>🚉 Trens & Metrô <span class="col-status-icon" id="status-col-trens"></span></h2>
-        <div style="display:flex;align-items:center;gap:4px">
-          <button class="btn-col-refresh" id="refresh-col-trens" onclick="refreshColuna('col-trens')" title="Atualizar">↻</button>
-          <span class="coluna-count" id="count-trens">—</span>
-        </div>
-      </div>
-      <div class="coluna-body">
-        <div id="trens-container" class="estado">Carregando...</div>
-        <div id="sem-trens" class="sem-resultado">Nenhum resultado.</div>
-      </div>
-    </div>
-
-    <!-- CET-SP -->
-    <div class="coluna tipo-transporte" id="col-cet" draggable="true">
-      <div class="resize-handle"></div>
-      <div class="coluna-header">
-        <h2>🚦 CET-SP <span class="col-status-icon" id="status-col-cet"></span></h2>
-        <div style="display:flex;align-items:center;gap:4px">
-          <button class="btn-col-refresh" id="refresh-col-cet" onclick="refreshColuna('col-cet')" title="Atualizar">↻</button>
-          <span class="coluna-count" id="count-cet">—</span>
-        </div>
-      </div>
-      <div class="coluna-body">
-        <div id="cet-container"></div>
-        <div id="sem-cet" class="sem-resultado">Nenhum resultado.</div>
-      </div>
-    </div>
-
-    <!-- WAZE -->
-    <div class="coluna tipo-transporte" id="col-waze" draggable="true">
-      <div class="resize-handle"></div>
-      <div class="coluna-header">
-        <h2>🗺️ Waze Live <span class="col-status-icon" id="status-col-waze"></span></h2>
-        <div style="display:flex;align-items:center;gap:4px">
-          <button class="btn-col-refresh" id="refresh-col-waze" onclick="refreshColuna('col-waze')" title="Atualizar">↻</button>
-          <span class="coluna-count" id="count-waze">—</span>
-        </div>
-      </div>
-      <div class="coluna-body">
-        <div id="waze-container"></div>
-        <div id="sem-waze" class="sem-resultado">Nenhum resultado.</div>
-      </div>
-    </div>
-
-    <!-- CLIMA -->
-    <div class="coluna tipo-servicos" id="col-clima" draggable="true">
-      <div class="resize-handle"></div>
-      <div class="coluna-header">
-        <h2>🌦️ Clima — SP <span class="col-status-icon" id="status-col-clima"></span></h2>
-        <div style="display:flex;align-items:center;gap:4px">
-          <button class="btn-col-refresh" id="refresh-col-clima" onclick="refreshColuna('col-clima')" title="Atualizar">↻</button>
-          <span class="coluna-count" id="count-clima">—</span>
-        </div>
-      </div>
-      <div class="coluna-body">
-        <div id="clima-container" class="estado">Carregando...</div>
-        <div id="sem-clima" class="sem-resultado">Nenhum resultado.</div>
-      </div>
-    </div>
-
-    <!-- MANANCIAIS -->
-    <div class="coluna tipo-servicos" id="col-mananciais" draggable="true">
-      <div class="resize-handle"></div>
-      <div class="coluna-header">
-        <h2>💧 Mananciais <span class="col-status-icon" id="status-col-mananciais"></span></h2>
-        <div style="display:flex;align-items:center;gap:4px">
-          <button class="btn-col-refresh" id="refresh-col-mananciais" onclick="refreshColuna('col-mananciais')" title="Atualizar">↻</button>
-          <span class="coluna-count" id="count-mananciais">—</span>
-        </div>
-      </div>
-      <div class="coluna-body">
-        <div id="mananciais-container"></div>
-        <div id="sem-mananciais" class="sem-resultado">Nenhum resultado.</div>
-      </div>
-    </div>
-
-    <!-- ENEL -->
-    <div class="coluna tipo-infra" id="col-enel" draggable="true">
-      <div class="resize-handle"></div>
-      <div class="coluna-header">
-        <h2>⚡ ENEL Falta de Luz <span class="col-status-icon" id="status-col-enel"></span></h2>
-        <div style="display:flex;align-items:center;gap:4px">
-          <button class="btn-col-refresh" id="refresh-col-enel" onclick="refreshColuna('col-enel')" title="Atualizar">↻</button>
-          <span class="coluna-count" id="count-enel">—</span>
-        </div>
-      </div>
-      <div class="coluna-body">
-        <div id="enel-container"></div>
-        <div id="sem-enel" class="sem-resultado">Nenhum resultado.</div>
-      </div>
-    </div>
-
-    <!-- SPTRANS -->
-    <div class="coluna tipo-transporte" id="col-sptrans" draggable="true">
-      <div class="resize-handle"></div>
-      <div class="coluna-header">
-        <h2>🚌 SPTrans — Ônibus <span class="col-status-icon" id="status-col-sptrans"></span></h2>
-        <div style="display:flex;align-items:center;gap:4px">
-          <button class="btn-marcar-lidos" onclick="marcarTodosLidos('col-sptrans')" title="Marcar todos como lidos">✓</button>
-          <button class="btn-col-refresh" id="refresh-col-sptrans" onclick="refreshColuna('col-sptrans')" title="Atualizar">↻</button>
-          <span class="badge-nao-lido" id="nao-lidos-col-sptrans" style="display:none"></span>
-          <span class="coluna-count" id="count-sptrans">—</span>
-        </div>
-      </div>
-      <div class="coluna-body">
-        <div id="sptrans-container" class="estado">Carregando...</div>
-        <div id="sem-sptrans" class="sem-resultado">Nenhum resultado.</div>
-      </div>
-    </div>
-
-    <!-- VOOS AO VIVO — FLIGHTRADAR24 -->
-    <div class="coluna tipo-transporte" id="col-voos" draggable="true">
-      <div class="resize-handle"></div>
-      <div class="coluna-header">
-        <h2>✈️ Voos ao Vivo — SP <span class="col-status-icon" id="status-col-voos"></span></h2>
-        <div style="display:flex;align-items:center;gap:4px">
-          <button class="btn-col-refresh" id="refresh-col-voos" onclick="refreshColuna('col-voos')" title="Recarregar">↻</button>
-          <span class="coluna-count" id="count-voos">—</span>
-        </div>
-      </div>
-      <div class="coluna-body" style="overflow:hidden;padding:0;">
-        <div id="voos-container"></div>
-        <div id="sem-voos" class="sem-resultado"></div>
-      </div>
-    </div>
-
-    <!-- CBN SÃO PAULO — AO VIVO -->
+    <!-- WINDY — Fileira 1, Col 1 -->
     <div class="coluna tipo-noticias" id="col-tv" draggable="true">
       <div class="resize-handle"></div>
       <div class="coluna-header">
@@ -647,43 +483,55 @@
       </div>
     </div>
 
-    <!-- ASSEMBLEIA LEGISLATIVA SP -->
-    <div class="coluna tipo-noticias" id="col-assembleia" draggable="true">
+    <!-- QUALIDADE DO AR — Fileira 2, Col 1 -->
+    <div class="coluna tipo-servicos" id="col-ar" draggable="true">
       <div class="resize-handle"></div>
       <div class="coluna-header">
-        <h2>🏛️ Assembleia Legislativa SP <span class="col-status-icon" id="status-col-assembleia"></span></h2>
+        <h2>🌫️ Qualidade do Ar <span class="col-status-icon" id="status-col-ar"></span></h2>
         <div style="display:flex;align-items:center;gap:4px">
-          <button class="btn-marcar-lidos" onclick="marcarTodosLidos('col-assembleia')" title="Marcar todos como lidos">✓</button>
-          <button class="btn-col-refresh" id="refresh-col-assembleia" onclick="refreshColuna('col-assembleia')" title="Atualizar">↻</button>
-          <span class="badge-nao-lido" id="nao-lidos-col-assembleia" style="display:none"></span>
-          <span class="coluna-count" id="count-assembleia">—</span>
+          <button class="btn-col-refresh" id="refresh-col-ar" onclick="refreshColuna('col-ar')" title="Atualizar">↻</button>
+          <span class="coluna-count" id="count-ar">—</span>
         </div>
       </div>
       <div class="coluna-body">
-        <div id="assembleia-container" class="estado">Carregando...</div>
-        <div id="sem-assembleia" class="sem-resultado">Nenhum resultado.</div>
+        <div id="ar-container" class="estado">Carregando...</div>
+        <div id="sem-ar" class="sem-resultado">Nenhum resultado.</div>
       </div>
     </div>
 
-    <!-- CÂMARA MUNICIPAL SP -->
-    <div class="coluna tipo-noticias" id="col-camara" draggable="true">
+    <!-- CLIMA — Fileira 1, Col 2 -->
+    <div class="coluna tipo-servicos" id="col-clima" draggable="true">
       <div class="resize-handle"></div>
       <div class="coluna-header">
-        <h2>🏙️ Câmara Municipal SP <span class="col-status-icon" id="status-col-camara"></span></h2>
+        <h2>🌦️ Clima — SP <span class="col-status-icon" id="status-col-clima"></span></h2>
         <div style="display:flex;align-items:center;gap:4px">
-          <button class="btn-marcar-lidos" onclick="marcarTodosLidos('col-camara')" title="Marcar todos como lidos">✓</button>
-          <button class="btn-col-refresh" id="refresh-col-camara" onclick="refreshColuna('col-camara')" title="Atualizar">↻</button>
-          <span class="badge-nao-lido" id="nao-lidos-col-camara" style="display:none"></span>
-          <span class="coluna-count" id="count-camara">—</span>
+          <button class="btn-col-refresh" id="refresh-col-clima" onclick="refreshColuna('col-clima')" title="Atualizar">↻</button>
+          <span class="coluna-count" id="count-clima">—</span>
         </div>
       </div>
       <div class="coluna-body">
-        <div id="camara-container" class="estado">Carregando...</div>
-        <div id="sem-camara" class="sem-resultado">Nenhum resultado.</div>
+        <div id="clima-container" class="estado">Carregando...</div>
+        <div id="sem-clima" class="sem-resultado">Nenhum resultado.</div>
       </div>
     </div>
 
-    <!-- G1 SÃO PAULO -->
+    <!-- MANANCIAIS — Fileira 2, Col 2 -->
+    <div class="coluna tipo-servicos" id="col-mananciais" draggable="true">
+      <div class="resize-handle"></div>
+      <div class="coluna-header">
+        <h2>💧 Mananciais <span class="col-status-icon" id="status-col-mananciais"></span></h2>
+        <div style="display:flex;align-items:center;gap:4px">
+          <button class="btn-col-refresh" id="refresh-col-mananciais" onclick="refreshColuna('col-mananciais')" title="Atualizar">↻</button>
+          <span class="coluna-count" id="count-mananciais">—</span>
+        </div>
+      </div>
+      <div class="coluna-body">
+        <div id="mananciais-container"></div>
+        <div id="sem-mananciais" class="sem-resultado">Nenhum resultado.</div>
+      </div>
+    </div>
+
+    <!-- G1 SÃO PAULO — Fileira 1, Col 3 -->
     <div class="coluna tipo-noticias" id="col-g1" draggable="true">
       <div class="resize-handle"></div>
       <div class="coluna-header">
@@ -701,23 +549,127 @@
       </div>
     </div>
 
-    <!-- QUALIDADE DO AR -->
-    <div class="coluna tipo-servicos" id="col-ar" draggable="true">
+    <!-- ASSEMBLEIA LEGISLATIVA SP — Fileira 2, Col 3 -->
+    <div class="coluna tipo-noticias" id="col-assembleia" draggable="true">
       <div class="resize-handle"></div>
       <div class="coluna-header">
-        <h2>🌫️ Qualidade do Ar <span class="col-status-icon" id="status-col-ar"></span></h2>
+        <h2>🏛️ Assembleia Legislativa SP <span class="col-status-icon" id="status-col-assembleia"></span></h2>
         <div style="display:flex;align-items:center;gap:4px">
-          <button class="btn-col-refresh" id="refresh-col-ar" onclick="refreshColuna('col-ar')" title="Atualizar">↻</button>
-          <span class="coluna-count" id="count-ar">—</span>
+          <button class="btn-marcar-lidos" onclick="marcarTodosLidos('col-assembleia')" title="Marcar todos como lidos">✓</button>
+          <button class="btn-col-refresh" id="refresh-col-assembleia" onclick="refreshColuna('col-assembleia')" title="Atualizar">↻</button>
+          <span class="badge-nao-lido" id="nao-lidos-col-assembleia" style="display:none"></span>
+          <span class="coluna-count" id="count-assembleia">—</span>
         </div>
       </div>
       <div class="coluna-body">
-        <div id="ar-container" class="estado">Carregando...</div>
-        <div id="sem-ar" class="sem-resultado">Nenhum resultado.</div>
+        <div id="assembleia-container" class="estado">Carregando...</div>
+        <div id="sem-assembleia" class="sem-resultado">Nenhum resultado.</div>
       </div>
     </div>
 
-    <!-- RODOVIAS SP -->
+    <!-- DIÁRIO DO TRANSPORTE — Fileira 1, Col 4 -->
+    <div class="coluna col-diario-sp tipo-noticias" id="col-diario" draggable="true">
+      <div class="resize-handle"></div>
+      <div class="coluna-header">
+        <h2>🚇 Diário do Transporte <span class="col-status-icon" id="status-col-diario"></span></h2>
+        <div style="display:flex;align-items:center;gap:4px">
+          <button class="btn-marcar-lidos" onclick="marcarTodosLidos('col-diario')" title="Marcar todos como lidos">✓</button>
+          <button class="btn-col-refresh" id="refresh-col-diario" onclick="refreshColuna('col-diario')" title="Atualizar">↻</button>
+          <span class="badge-nao-lido" id="nao-lidos-col-diario" style="display:none"></span>
+          <span class="coluna-count" id="count-diario">—</span>
+        </div>
+      </div>
+      <div class="coluna-body">
+        <div id="diario-container" class="estado">Carregando...</div>
+        <div id="sem-diario" class="sem-resultado">Nenhum resultado.</div>
+      </div>
+    </div>
+
+    <!-- CÂMARA MUNICIPAL SP — Fileira 2, Col 4 -->
+    <div class="coluna tipo-noticias" id="col-camara" draggable="true">
+      <div class="resize-handle"></div>
+      <div class="coluna-header">
+        <h2>🏙️ Câmara Municipal SP <span class="col-status-icon" id="status-col-camara"></span></h2>
+        <div style="display:flex;align-items:center;gap:4px">
+          <button class="btn-marcar-lidos" onclick="marcarTodosLidos('col-camara')" title="Marcar todos como lidos">✓</button>
+          <button class="btn-col-refresh" id="refresh-col-camara" onclick="refreshColuna('col-camara')" title="Atualizar">↻</button>
+          <span class="badge-nao-lido" id="nao-lidos-col-camara" style="display:none"></span>
+          <span class="coluna-count" id="count-camara">—</span>
+        </div>
+      </div>
+      <div class="coluna-body">
+        <div id="camara-container" class="estado">Carregando...</div>
+        <div id="sem-camara" class="sem-resultado">Nenhum resultado.</div>
+      </div>
+    </div>
+
+    <!-- TRENS & METRÔ — Fileira 1, Col 5 -->
+    <div class="coluna tipo-transporte" id="col-trens" draggable="true">
+      <div class="resize-handle"></div>
+      <div class="coluna-header">
+        <h2>🚉 Trens & Metrô <span class="col-status-icon" id="status-col-trens"></span></h2>
+        <div style="display:flex;align-items:center;gap:4px">
+          <button class="btn-col-refresh" id="refresh-col-trens" onclick="refreshColuna('col-trens')" title="Atualizar">↻</button>
+          <span class="coluna-count" id="count-trens">—</span>
+        </div>
+      </div>
+      <div class="coluna-body">
+        <div id="trens-container" class="estado">Carregando...</div>
+        <div id="sem-trens" class="sem-resultado">Nenhum resultado.</div>
+      </div>
+    </div>
+
+    <!-- CET-SP — Fileira 2, Col 5 -->
+    <div class="coluna tipo-transporte" id="col-cet" draggable="true">
+      <div class="resize-handle"></div>
+      <div class="coluna-header">
+        <h2>🚦 CET-SP <span class="col-status-icon" id="status-col-cet"></span></h2>
+        <div style="display:flex;align-items:center;gap:4px">
+          <button class="btn-col-refresh" id="refresh-col-cet" onclick="refreshColuna('col-cet')" title="Atualizar">↻</button>
+          <span class="coluna-count" id="count-cet">—</span>
+        </div>
+      </div>
+      <div class="coluna-body">
+        <div id="cet-container"></div>
+        <div id="sem-cet" class="sem-resultado">Nenhum resultado.</div>
+      </div>
+    </div>
+
+    <!-- SPTRANS — Fileira 1, Col 6 -->
+    <div class="coluna tipo-transporte" id="col-sptrans" draggable="true">
+      <div class="resize-handle"></div>
+      <div class="coluna-header">
+        <h2>🚌 SPTrans — Ônibus <span class="col-status-icon" id="status-col-sptrans"></span></h2>
+        <div style="display:flex;align-items:center;gap:4px">
+          <button class="btn-marcar-lidos" onclick="marcarTodosLidos('col-sptrans')" title="Marcar todos como lidos">✓</button>
+          <button class="btn-col-refresh" id="refresh-col-sptrans" onclick="refreshColuna('col-sptrans')" title="Atualizar">↻</button>
+          <span class="badge-nao-lido" id="nao-lidos-col-sptrans" style="display:none"></span>
+          <span class="coluna-count" id="count-sptrans">—</span>
+        </div>
+      </div>
+      <div class="coluna-body">
+        <div id="sptrans-container" class="estado">Carregando...</div>
+        <div id="sem-sptrans" class="sem-resultado">Nenhum resultado.</div>
+      </div>
+    </div>
+
+    <!-- WAZE — Fileira 2, Col 6 -->
+    <div class="coluna tipo-transporte" id="col-waze" draggable="true">
+      <div class="resize-handle"></div>
+      <div class="coluna-header">
+        <h2>🗺️ Waze Live <span class="col-status-icon" id="status-col-waze"></span></h2>
+        <div style="display:flex;align-items:center;gap:4px">
+          <button class="btn-col-refresh" id="refresh-col-waze" onclick="refreshColuna('col-waze')" title="Atualizar">↻</button>
+          <span class="coluna-count" id="count-waze">—</span>
+        </div>
+      </div>
+      <div class="coluna-body">
+        <div id="waze-container"></div>
+        <div id="sem-waze" class="sem-resultado">Nenhum resultado.</div>
+      </div>
+    </div>
+
+    <!-- RODOVIAS SP — Fileira 1, Col 7 -->
     <div class="coluna tipo-transporte" id="col-rodovias" draggable="true">
       <div class="resize-handle"></div>
       <div class="coluna-header">
@@ -730,6 +682,54 @@
       <div class="coluna-body">
         <div id="rodovias-container"></div>
         <div id="sem-rodovias" class="sem-resultado">Nenhum resultado.</div>
+      </div>
+    </div>
+
+    <!-- VOOS AO VIVO — Fileira 2, Col 7 -->
+    <div class="coluna tipo-transporte" id="col-voos" draggable="true">
+      <div class="resize-handle"></div>
+      <div class="coluna-header">
+        <h2>✈️ Voos ao Vivo — SP <span class="col-status-icon" id="status-col-voos"></span></h2>
+        <div style="display:flex;align-items:center;gap:4px">
+          <button class="btn-col-refresh" id="refresh-col-voos" onclick="refreshColuna('col-voos')" title="Recarregar">↻</button>
+          <span class="coluna-count" id="count-voos">—</span>
+        </div>
+      </div>
+      <div class="coluna-body" style="overflow:hidden;padding:0;">
+        <div id="voos-container"></div>
+        <div id="sem-voos" class="sem-resultado"></div>
+      </div>
+    </div>
+
+    <!-- ENEL — Fileira 1, Col 8 -->
+    <div class="coluna tipo-infra" id="col-enel" draggable="true">
+      <div class="resize-handle"></div>
+      <div class="coluna-header">
+        <h2>⚡ ENEL Falta de Luz <span class="col-status-icon" id="status-col-enel"></span></h2>
+        <div style="display:flex;align-items:center;gap:4px">
+          <button class="btn-col-refresh" id="refresh-col-enel" onclick="refreshColuna('col-enel')" title="Atualizar">↻</button>
+          <span class="coluna-count" id="count-enel">—</span>
+        </div>
+      </div>
+      <div class="coluna-body">
+        <div id="enel-container"></div>
+        <div id="sem-enel" class="sem-resultado">Nenhum resultado.</div>
+      </div>
+    </div>
+
+    <!-- FAVORITOS — oculto por padrão -->
+    <div class="coluna tipo-favoritos col-oculta" id="col-favoritos" draggable="true">
+      <div class="resize-handle"></div>
+      <div class="coluna-header">
+        <h2>⭐ Favoritos <span class="col-status-icon" id="status-col-favoritos"></span></h2>
+        <div style="display:flex;align-items:center;gap:4px">
+          <button class="btn-marcar-lidos" onclick="marcarTodosLidos('col-favoritos')" title="Marcar todos como lidos">✓</button>
+          <span class="coluna-count" id="count-favoritos">—</span>
+        </div>
+      </div>
+      <div class="coluna-body">
+        <div id="favoritos-container" class="estado">Nenhum favorito ainda.<br><small style="opacity:0.6">Clique em ★ em qualquer item.</small></div>
+        <div id="sem-favoritos" class="sem-resultado">Nenhum resultado.</div>
       </div>
     </div>
 
@@ -2193,12 +2193,12 @@
       document.documentElement.style.setProperty('--font-size-meta', '11px');
       ['densidade','fonte','fileiras'].forEach(tipo => {
         try { localStorage.removeItem(`monitor-sp-config-${tipo}`); } catch(e) {}
-        const padrao = tipo === 'densidade' ? 'normal' : tipo === 'fonte' ? 'M' : '1';
+        const padrao = tipo === 'densidade' ? 'normal' : tipo === 'fonte' ? 'M' : '2';
         document.querySelectorAll(`.config-btn[data-config="${tipo}"]`).forEach(b => {
           b.classList.toggle('ativo', b.dataset.val === padrao);
         });
       });
-      document.getElementById('colunas-container').classList.remove('duas-fileiras');
+      document.getElementById('colunas-container').classList.add('duas-fileiras');
       showToast('Layout restaurado ↺');
     }
 
