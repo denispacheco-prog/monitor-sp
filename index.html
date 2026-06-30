@@ -1871,7 +1871,8 @@
     // ==============================
     async function carregarTodosOsDados() {
       atualizarStatusGlobal('carregando');
-      const promises = COLUNAS.filter(c => !c.local).map(c => wrapCarregar(c.colId, c.fn)());
+      // Colunas ocultadas pelo usuário não são buscadas — economiza chamadas ao proxy (cota diária do Apps Script)
+      const promises = COLUNAS.filter(c => !c.local && !document.getElementById(c.colId)?.classList.contains('col-oculta')).map(c => wrapCarregar(c.colId, c.fn)());
       await Promise.allSettled(promises);
       ultimaAtualizacao = new Date();
       proximoRefresh = Date.now() + TEMPO_REFRESH;
@@ -1897,6 +1898,8 @@
         col.classList.remove('col-oculta');
         salvarEstadoColunas();
         setTimeout(() => col.scrollIntoView({ behavior: 'smooth', block: 'start' }), 30);
+        // Coluna oculta não é buscada nos refreshes automáticos — atualiza agora que voltou a ficar visível
+        refreshColuna(colId);
       } else if (e?.shiftKey) {
         // Shift+clique → ocultar
         btn.classList.remove('ativo');
@@ -2423,8 +2426,12 @@
     // ==============================
     function iniciarAutoRefresh() {
       setInterval(() => {
+        if (document.hidden) return; // pausa com a aba em segundo plano (economiza cota do proxy)
         if (Date.now() >= proximoRefresh) carregarTodosOsDados();
       }, 30000);
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden && proximoRefresh && Date.now() >= proximoRefresh) carregarTodosOsDados();
+      });
     }
 
     // ==============================
