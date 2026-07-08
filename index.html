@@ -160,9 +160,9 @@
     .btn-theme { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); color: var(--text-header); padding: 5px 11px; border-radius: 6px; cursor: pointer; font-size: 12px; transition: background 0.2s; }
     .btn-theme:hover { background: rgba(255,255,255,0.16); }
 
-    .btn-config { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); color: var(--text-header); padding: 5px 11px; border-radius: 6px; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 5px; transition: background 0.2s; }
-    .btn-config:hover  { background: rgba(255,255,255,0.16); }
-    .btn-config.aberto { background: rgba(255,255,255,0.22); }
+    .btn-config, .btn-busca-toggle { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); color: var(--text-header); padding: 5px 11px; border-radius: 6px; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 5px; transition: background 0.2s; }
+    .btn-config:hover, .btn-busca-toggle:hover  { background: rgba(255,255,255,0.16); }
+    .btn-config.aberto, .btn-busca-toggle.aberto { background: rgba(255,255,255,0.22); }
 
     /* ============================================================ CONFIG PANEL */
     .config-panel { background: var(--bg-busca); border-bottom: 1px solid var(--border-color); overflow: hidden; max-height: 0; transition: max-height 0.3s ease, padding 0.3s ease; padding: 0 20px; }
@@ -182,7 +182,8 @@
     .config-reset:hover { color: var(--accent); background: rgba(232,98,26,0.07); }
 
     /* ============================================================ BUSCA BAR */
-    .busca-bar { background: var(--bg-busca); border-bottom: 1px solid var(--border-color); padding: 8px 20px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; transition: background-color 0.3s; }
+    .busca-bar { background: var(--bg-busca); border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; overflow: hidden; max-height: 0; padding: 0 20px; transition: background-color 0.3s, max-height 0.3s ease, padding 0.3s ease; }
+    .busca-bar.aberto { max-height: 120px; padding: 8px 20px; }
     .busca-bar label { font-size: 12px; font-weight: 600; color: var(--accent); white-space: nowrap; }
     .busca-bar input { flex: 1; min-width: 160px; max-width: 320px; border: 1px solid var(--border-color); background: var(--bg-body); color: var(--text-main); border-radius: 5px; padding: 5px 10px; font-size: 13px; outline: none; transition: border-color 0.2s; font-family: inherit; }
     .busca-bar input:focus { border-color: var(--accent); }
@@ -383,6 +384,7 @@
         <button id="btn-refresh-all" class="btn-header-icon" onclick="refreshManual()" title="Atualizar tudo agora (R)">↻</button>
         <button id="btn-notif" class="btn-header-icon" onclick="toggleNotificacoes()" title="Ativar notificações">🔕</button>
         <button id="theme-toggle" class="btn-theme">🌙 Escuro</button>
+        <button id="btn-busca-toggle" class="btn-busca-toggle" onclick="toggleBusca()">🔍 Buscar</button>
         <button id="btn-config" class="btn-config" onclick="toggleConfig()">⚙️ Layout</button>
       </div>
     </div>
@@ -424,7 +426,7 @@
     </div>
   </div>
 
-  <div class="busca-bar">
+  <div class="busca-bar" id="busca-bar">
     <label>🔍 Filtrar:</label>
     <input type="text" id="campo-busca" placeholder="Palavra-chave e Enter... (atalho: /)" />
     <button onclick="aplicarFiltros()">Buscar</button>
@@ -2168,6 +2170,18 @@
       btn.classList.toggle('aberto');
     }
 
+    function toggleBusca() {
+      const bar = document.getElementById('busca-bar');
+      const btn = document.getElementById('btn-busca-toggle');
+      bar.classList.toggle('aberto');
+      btn.classList.toggle('aberto');
+    }
+
+    function abrirBusca() {
+      const bar = document.getElementById('busca-bar');
+      if (!bar.classList.contains('aberto')) toggleBusca();
+    }
+
     function aplicarConfig(btn) {
       const tipo = btn.dataset.config;
       const val = btn.dataset.val;
@@ -2400,7 +2414,7 @@
           if (e.key === 'Escape') limpar();
           return;
         }
-        if (e.key === '/' || e.key === 'f') { e.preventDefault(); document.getElementById('campo-busca').focus(); }
+        if (e.key === '/' || e.key === 'f') { e.preventDefault(); abrirBusca(); document.getElementById('campo-busca').focus(); }
         if (e.key === 'r' || e.key === 'R') refreshManual();
         if (e.key === 'Escape') limpar();
       });
@@ -2419,6 +2433,7 @@
           dateFilter = d;
           document.querySelectorAll('.date-btn').forEach(b => b.classList.toggle('ativo', b.dataset.date === d));
         }
+        if (q || (d && d !== 'todos')) abrirBusca();
       } catch(e) {}
     }
 
