@@ -42,8 +42,6 @@
       --col-max-height: 75vh;
       --font-size-link: 13px;
       --font-size-meta: 11px;
-      /* linha discreta do header */
-      --header-stripe: var(--border-color);
     }
 
     body.dark-theme {
@@ -68,7 +66,6 @@
       --cat-noticias:   #c98f83;
       --cat-infra:      #d1a355;
       --cat-favoritos:  #dba955;
-      --header-stripe: var(--border-color);
     }
 
     /* ============================================================ BASE */
@@ -89,39 +86,21 @@
     header {
       background: var(--bg-header);
       color: var(--text-header);
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      transition: background-color 0.3s;
-    }
-    .header-metro-stripe {
-      height: 1px;
-      background: var(--header-stripe);
-    }
-    .header-inner {
-      padding: 9px 20px;
+      padding: 10px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid var(--border-color);
+      transition: background-color 0.3s;
     }
     header h1 {
       margin: 0;
-      font-size: 16px;
-      font-weight: 700;
+      font-size: 15px;
+      font-weight: 600;
       display: flex;
       align-items: center;
       gap: 8px;
-      letter-spacing: 0.01em;
-    }
-    .h1-sp {
-      background: var(--accent);
-      color: #fff;
-      padding: 1px 7px 2px;
-      border-radius: 4px;
-      font-size: 14px;
-      font-weight: 800;
-      letter-spacing: 0.04em;
+      letter-spacing: -0.01em;
     }
 
     .header-monitor {
@@ -152,9 +131,9 @@
       transition: background 0.2s, transform 0.3s;
       display: flex; align-items: center; justify-content: center;
     }
-    .btn-header-icon:hover { background: var(--bg-item-hover); }
+    .btn-header-icon:hover { background: var(--bg-item-hover); color: var(--text-main); }
     .btn-header-icon.girando { animation: girar 0.8s linear; }
-    .btn-header-icon.notif-ativo { border-color: var(--accent); color: var(--accent); }
+    .btn-header-icon.notif-ativo { background: var(--bg-item-hover); border-color: var(--accent); color: var(--accent); }
     .btn-header-icon.notif-negado { opacity: 0.4; cursor: not-allowed; }
     #btn-notif { width: auto; padding: 5px 10px; font-size: 11px; }
     @keyframes girar { to { transform: rotate(360deg); } }
@@ -374,9 +353,8 @@
        MOBILE — colunas em tela cheia, uma por vez, com swipe
     ============================================================ */
     @media (max-width: 680px) {
-      .header-inner { padding: 8px 12px; flex-wrap: wrap; row-gap: 8px; }
+      header { padding: 8px 12px; flex-wrap: wrap; row-gap: 8px; }
       header h1 { flex: 1 1 100%; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-      .h1-sp { font-size: 12px; }
       .header-monitor { flex: 0 0 auto; padding: 0; min-width: 0; }
       .header-monitor .monitor-status,
       .header-monitor .monitor-sep,
@@ -431,22 +409,19 @@
 <body>
 
   <header>
-    <div class="header-metro-stripe"></div>
-    <div class="header-inner">
-      <h1><span class="h1-sp">SP</span> Monitor da Cidade</h1>
-      <div class="header-monitor">
-        <span class="monitor-dot" id="monitor-dot"></span>
-        <span class="monitor-status" id="monitor-status">Inicializando...</span>
-        <span class="monitor-sep">·</span>
-        <span class="monitor-countdown" id="monitor-countdown"></span>
-      </div>
-      <div class="header-actions">
-        <button id="btn-refresh-all" class="btn-header-icon" onclick="refreshManual()" title="Atualizar tudo agora (R)">↻</button>
-        <button id="btn-notif" class="btn-header-icon" onclick="toggleNotificacoes()" title="Ativar notificações">Notif</button>
-        <button id="theme-toggle" class="btn-theme">Escuro</button>
-        <button id="btn-busca-toggle" class="btn-busca-toggle" onclick="toggleBusca()">Buscar</button>
-        <button id="btn-config" class="btn-config" onclick="toggleConfig()">Layout</button>
-      </div>
+    <h1>SP Monitor da Cidade</h1>
+    <div class="header-monitor">
+      <span class="monitor-dot" id="monitor-dot"></span>
+      <span class="monitor-status" id="monitor-status">Inicializando...</span>
+      <span class="monitor-sep">·</span>
+      <span class="monitor-countdown" id="monitor-countdown"></span>
+    </div>
+    <div class="header-actions">
+      <button id="btn-refresh-all" class="btn-header-icon" onclick="refreshManual()" title="Atualizar tudo agora (R)">↻</button>
+      <button id="btn-notif" class="btn-header-icon" onclick="toggleNotificacoes()" title="Ativar notificações">Notif</button>
+      <button id="theme-toggle" class="btn-theme">Escuro</button>
+      <button id="btn-busca-toggle" class="btn-busca-toggle" onclick="toggleBusca()">Buscar</button>
+      <button id="btn-config" class="btn-config" onclick="toggleConfig()">Layout</button>
     </div>
   </header>
 
