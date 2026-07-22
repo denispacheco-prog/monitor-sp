@@ -189,12 +189,12 @@
     .toggle-bar::-webkit-scrollbar { display: none; }
     .toggle-bar label { font-size: 11px; font-weight: 700; color: var(--text-muted); white-space: nowrap; margin-right: 2px; text-transform: uppercase; letter-spacing: 0.05em; }
     .toggle-col-btn { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; padding: 3px 9px 3px 11px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-body); color: var(--text-muted); cursor: pointer; transition: background 0.15s, color 0.15s, border-color 0.15s, opacity 0.15s, box-shadow 0.15s; user-select: none; font-family: inherit; font-weight: 500; white-space: nowrap; flex-shrink: 0; }
-    .toggle-col-btn.ativo { background: var(--bg-item-hover); color: var(--text-main); border-color: var(--border-color); opacity: 1; }
-    .toggle-col-btn.ativo.tipo-transporte { box-shadow: inset 3px 0 0 0 var(--cat-transporte); }
-    .toggle-col-btn.ativo.tipo-servicos   { box-shadow: inset 3px 0 0 0 var(--cat-servicos); }
-    .toggle-col-btn.ativo.tipo-noticias   { box-shadow: inset 3px 0 0 0 var(--cat-noticias); }
-    .toggle-col-btn.ativo.tipo-infra      { box-shadow: inset 3px 0 0 0 var(--cat-infra); }
-    .toggle-col-btn.ativo.tipo-favoritos  { box-shadow: inset 3px 0 0 0 var(--cat-favoritos); }
+    .toggle-col-btn.ativo { background: color-mix(in srgb, var(--text-muted) 14%, transparent); color: var(--text-main); border-color: transparent; opacity: 1; }
+    .toggle-col-btn.ativo.tipo-transporte { background: color-mix(in srgb, var(--cat-transporte) 16%, transparent); color: var(--cat-transporte); }
+    .toggle-col-btn.ativo.tipo-servicos   { background: color-mix(in srgb, var(--cat-servicos) 16%, transparent); color: var(--cat-servicos); }
+    .toggle-col-btn.ativo.tipo-noticias   { background: color-mix(in srgb, var(--cat-noticias) 16%, transparent); color: var(--cat-noticias); }
+    .toggle-col-btn.ativo.tipo-infra      { background: color-mix(in srgb, var(--cat-infra) 16%, transparent); color: var(--cat-infra); }
+    .toggle-col-btn.ativo.tipo-favoritos  { background: color-mix(in srgb, var(--cat-favoritos) 16%, transparent); color: var(--cat-favoritos); }
     .toggle-col-btn:not(.ativo) { opacity: 0.55; }
     .toggle-col-btn:hover { opacity: 1; }
     .toggle-col-btn.dragging-btn { opacity: 0.3 !important; outline: 2px dashed var(--accent); }
