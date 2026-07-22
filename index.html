@@ -7,31 +7,34 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☔</text></svg>">
   <style>
     /* ============================================================
-       TOKENS — Identidade SP
-       Paleta: cinza chumbo urbano + laranja metrô + verde água
+       TOKENS — Identidade Reader
+       Paleta: papel quente + tons terrosos + azul de destaque
     ============================================================ */
     :root {
-      --bg-body:       #f1f3f4;
-      --bg-header:     #1a1a2e;        /* azul noite urbano */
-      --accent:        #e8621a;        /* laranja metrô linha 3 */
-      --accent2:       #00897b;        /* verde água manancial */
-      --accent3:       #5c6bc0;        /* roxo metrô linha 5 */
-      --text-header:   #f0f0f0;
-      --bg-coluna:     #ffffff;
-      --text-main:     #2d2d2d;
-      --border-color:  #dde1e7;
-      --bg-item-hover: #f7f9fb;
-      --link-color:    #1a1a2e;
-      --text-muted:    #6b7280;
-      --bg-count:      #eaecef;
-      --text-count:    #374151;
-      --bg-busca:      #ffffff;
-      /* categorias */
-      --cat-transporte: #e8621a;
-      --cat-servicos:   #00897b;
-      --cat-noticias:   #5c6bc0;
-      --cat-infra:      #b45309;
-      --cat-favoritos:  #d97706;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+      --bg-body:       #faf9f6;
+      --bg:            #faf9f6;
+      --text-main:     #2b2a28;
+      --fg:            #2b2a28;
+      --text-muted:    #8a8579;
+      --border-color:  #e6e3dc;
+      --accent:        #0060df;
+
+      --bg-header:     var(--bg-body);
+      --text-header:   var(--text-main);
+      --bg-coluna:     #fffefb;
+      --bg-item-hover: #f3f1ea;
+      --link-color:    var(--text-main);
+      --bg-count:      #f0eee6;
+      --text-count:    var(--text-muted);
+      --bg-busca:      var(--bg-body);
+      /* categorias — variações terrosas, sem azul frio nem preto puro */
+      --cat-transporte: #c1440e;
+      --cat-servicos:   #78854a;
+      --cat-noticias:   #9c5b56;
+      --cat-infra:      #8a6220;
+      --cat-favoritos:  #c98a2c;
       /* layout */
       --col-width:      300px;
       --item-padding-v: 10px;
@@ -39,41 +42,40 @@
       --col-max-height: 75vh;
       --font-size-link: 13px;
       --font-size-meta: 11px;
-      /* header strip */
-      --header-stripe: repeating-linear-gradient(
-        90deg,
-        #e8621a 0px, #e8621a 28px,
-        #00897b 28px, #00897b 56px,
-        #5c6bc0 56px, #5c6bc0 84px,
-        #f7c948 84px, #f7c948 112px,
-        #e8621a 112px
-      );
+      /* linha discreta do header */
+      --header-stripe: var(--border-color);
     }
 
     body.dark-theme {
-      --bg-body:       #0a0a0a;
-      --bg-header:     #000000;
-      --text-header:   #ebebeb;
-      --bg-coluna:     #141414;
-      --text-main:     #e2e2e2;
-      --border-color:  #2a2a2a;
-      --bg-item-hover: #1e1e1e;
-      --link-color:    #ffffff;
-      --text-muted:    #7a7a7a;
-      --bg-count:      #1e1e1e;
-      --text-count:    #9d9d9d;
-      --bg-busca:      #141414;
-      --cat-transporte: #ff9956;
-      --cat-servicos:   #4db6ac;
-      --cat-noticias:   #9fa8da;
-      --cat-infra:      #f59e0b;
+      --bg-body:       #221f1c;
+      --bg:            #221f1c;
+      --text-main:     #e8e4dc;
+      --fg:            #e8e4dc;
+      --text-muted:    #9c968a;
+      --border-color:  #3a362f;
+      --accent:        #6ea8fe;
+
+      --bg-header:     var(--bg-body);
+      --text-header:   var(--text-main);
+      --bg-coluna:     #26221d;
+      --bg-item-hover: #2a2620;
+      --link-color:    var(--text-main);
+      --bg-count:      #2f2b25;
+      --text-count:    var(--text-muted);
+      --bg-busca:      var(--bg-body);
+      --cat-transporte: #e8825a;
+      --cat-servicos:   #a3ac6e;
+      --cat-noticias:   #c98f83;
+      --cat-infra:      #d1a355;
+      --cat-favoritos:  #dba955;
+      --header-stripe: var(--border-color);
     }
 
     /* ============================================================ BASE */
     *, *::before, *::after { box-sizing: border-box; }
     html, body { height: 100%; }
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: var(--font-sans);
       background: var(--bg-body);
       margin: 0;
       color: var(--text-main);
@@ -92,9 +94,8 @@
       flex-direction: column;
       transition: background-color 0.3s;
     }
-    /* faixa de cores das linhas do metrô */
     .header-metro-stripe {
-      height: 4px;
+      height: 1px;
       background: var(--header-stripe);
     }
     .header-inner {
@@ -102,7 +103,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+      border-bottom: 1px solid var(--border-color);
     }
     header h1 {
       margin: 0;
@@ -125,7 +126,7 @@
 
     .header-monitor {
       display: flex; align-items: center; gap: 6px;
-      font-size: 11px; color: rgba(255,255,255,0.5); flex: 1; padding: 0 20px;
+      font-size: 11px; color: var(--text-muted); flex: 1; padding: 0 20px;
     }
     .monitor-dot { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; flex-shrink: 0; box-shadow: 0 0 0 0 rgba(74,222,128,0.5); }
     .monitor-dot.pulsando { animation: pulse-dot 1s ease-in-out infinite; }
@@ -136,33 +137,34 @@
       70%  { box-shadow: 0 0 0 6px rgba(74,222,128,0); }
       100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); }
     }
-    .monitor-status { color: rgba(255,255,255,0.7); font-weight: 500; }
+    .monitor-status { color: var(--text-muted); font-weight: 500; }
     .monitor-sep    { opacity: 0.3; }
     .monitor-countdown { font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
 
     .header-actions { display: flex; align-items: center; gap: 8px; }
 
     .btn-header-icon {
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.15);
-      color: var(--text-header);
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
       width: 28px; height: 28px; border-radius: 6px;
-      cursor: pointer; font-size: 14px; line-height: 1;
+      cursor: pointer; font-size: 13px; line-height: 1;
       transition: background 0.2s, transform 0.3s;
       display: flex; align-items: center; justify-content: center;
     }
-    .btn-header-icon:hover { background: rgba(255,255,255,0.16); }
+    .btn-header-icon:hover { background: var(--bg-item-hover); }
     .btn-header-icon.girando { animation: girar 0.8s linear; }
-    .btn-header-icon.notif-ativo { background: rgba(251,191,36,0.3); border-color: rgba(251,191,36,0.6); }
+    .btn-header-icon.notif-ativo { border-color: var(--accent); color: var(--accent); }
     .btn-header-icon.notif-negado { opacity: 0.4; cursor: not-allowed; }
+    #btn-notif { width: auto; padding: 5px 10px; font-size: 11px; }
     @keyframes girar { to { transform: rotate(360deg); } }
 
-    .btn-theme { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); color: var(--text-header); padding: 5px 11px; border-radius: 6px; cursor: pointer; font-size: 12px; transition: background 0.2s; }
-    .btn-theme:hover { background: rgba(255,255,255,0.16); }
+    .btn-theme { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); padding: 5px 11px; border-radius: 6px; cursor: pointer; font-size: 12px; transition: background 0.2s; }
+    .btn-theme:hover { background: var(--bg-item-hover); }
 
-    .btn-config, .btn-busca-toggle { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); color: var(--text-header); padding: 5px 11px; border-radius: 6px; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 5px; transition: background 0.2s; }
-    .btn-config:hover, .btn-busca-toggle:hover  { background: rgba(255,255,255,0.16); }
-    .btn-config.aberto, .btn-busca-toggle.aberto { background: rgba(255,255,255,0.22); }
+    .btn-config, .btn-busca-toggle { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); padding: 5px 11px; border-radius: 6px; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 5px; transition: background 0.2s; }
+    .btn-config:hover, .btn-busca-toggle:hover  { background: var(--bg-item-hover); }
+    .btn-config.aberto, .btn-busca-toggle.aberto { background: var(--bg-item-hover); border-color: var(--accent); }
 
     /* ============================================================ CONFIG PANEL */
     .config-panel { background: var(--bg-busca); border-bottom: 1px solid var(--border-color); overflow: hidden; max-height: 0; transition: max-height 0.3s ease, padding 0.3s ease; padding: 0 20px; }
@@ -179,7 +181,7 @@
     input[type=range].config-range { -webkit-appearance: none; appearance: none; width: 140px; height: 4px; border-radius: 2px; background: var(--border-color); outline: none; cursor: pointer; }
     input[type=range].config-range::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); cursor: pointer; }
     .config-reset { margin-left: auto; font-size: 11px; color: var(--text-muted); background: none; border: none; cursor: pointer; padding: 4px 8px; border-radius: 4px; transition: color 0.15s, background 0.15s; font-family: inherit; align-self: flex-end; }
-    .config-reset:hover { color: var(--accent); background: rgba(232,98,26,0.07); }
+    .config-reset:hover { color: var(--accent); background: var(--bg-item-hover); }
 
     /* ============================================================ BUSCA BAR */
     .busca-bar { background: var(--bg-busca); border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; overflow: hidden; max-height: 0; padding: 0 20px; transition: background-color 0.3s, max-height 0.3s ease, padding 0.3s ease; }
@@ -187,7 +189,7 @@
     .busca-bar label { font-size: 12px; font-weight: 600; color: var(--accent); white-space: nowrap; }
     .busca-bar input { flex: 1; min-width: 160px; max-width: 320px; border: 1px solid var(--border-color); background: var(--bg-body); color: var(--text-main); border-radius: 5px; padding: 5px 10px; font-size: 13px; outline: none; transition: border-color 0.2s; font-family: inherit; }
     .busca-bar input:focus { border-color: var(--accent); }
-    .busca-bar button { background: var(--bg-header); color: #fff; border: none; border-radius: 5px; padding: 5px 14px; font-size: 13px; font-weight: 600; cursor: pointer; transition: opacity 0.2s; font-family: inherit; }
+    .busca-bar button { background: var(--text-main); color: var(--bg-body); border: none; border-radius: 5px; padding: 5px 14px; font-size: 13px; font-weight: 600; cursor: pointer; transition: opacity 0.2s; font-family: inherit; }
     .busca-bar button:hover { opacity: 0.85; }
     .btn-limpar { background: transparent !important; color: var(--text-muted) !important; border: 1px solid var(--border-color) !important; font-weight: normal !important; }
     .bar-sep { width: 1px; height: 18px; background: var(--border-color); flex-shrink: 0; margin: 0 2px; }
@@ -198,24 +200,23 @@
     .btn-copiar-link:hover { border-color: var(--accent); color: var(--accent); }
     .btn-copiar-link.copiado { background: #22c55e; color: #fff; border-color: #22c55e; }
 
-    .resultado-bar { display: none; background: #fff4e6; border-bottom: 1px solid #ffd49b; padding: 8px 24px; font-size: 13px; color: #7a4b00; gap: 8px; align-items: center; }
-    body.dark-theme .resultado-bar { background: #2a1800; border-color: #5a3500; color: #ffb870; }
+    .resultado-bar { display: none; background: var(--bg-item-hover); border-bottom: 1px solid var(--border-color); padding: 8px 24px; font-size: 13px; color: var(--text-main); gap: 8px; align-items: center; }
     .resultado-bar.visivel { display: flex; }
-    .resultado-bar strong { background: rgba(0,0,0,0.05); padding: 1px 8px; border-radius: 4px; }
+    .resultado-bar strong { background: var(--bg-count); color: var(--text-count); padding: 1px 8px; border-radius: 4px; }
 
     /* ============================================================ TOGGLE BAR */
     .toggle-bar { background: var(--bg-busca); border-bottom: 1px solid var(--border-color); padding: 7px 20px; display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; cursor: grab; transition: background-color 0.3s; }
     .toggle-bar:active { cursor: grabbing; }
     .toggle-bar::-webkit-scrollbar { display: none; }
     .toggle-bar label { font-size: 11px; font-weight: 700; color: var(--text-muted); white-space: nowrap; margin-right: 2px; text-transform: uppercase; letter-spacing: 0.05em; }
-    .toggle-col-btn { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; padding: 3px 9px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-body); color: var(--text-muted); cursor: pointer; transition: background 0.15s, color 0.15s, border-color 0.15s, opacity 0.15s; user-select: none; font-family: inherit; font-weight: 500; }
-    .toggle-col-btn.ativo { background: var(--bg-header); color: #fff; border-color: transparent; opacity: 1; }
-    .toggle-col-btn.ativo.tipo-transporte { background: var(--cat-transporte); }
-    .toggle-col-btn.ativo.tipo-servicos   { background: var(--cat-servicos); }
-    .toggle-col-btn.ativo.tipo-noticias   { background: var(--cat-noticias); }
-    .toggle-col-btn.ativo.tipo-infra      { background: var(--cat-infra); }
-    .toggle-col-btn.ativo.tipo-favoritos  { background: var(--cat-favoritos); }
-    .toggle-col-btn:not(.ativo) { opacity: 0.45; }
+    .toggle-col-btn { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; padding: 3px 9px 3px 11px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-body); color: var(--text-muted); cursor: pointer; transition: background 0.15s, color 0.15s, border-color 0.15s, opacity 0.15s, box-shadow 0.15s; user-select: none; font-family: inherit; font-weight: 500; }
+    .toggle-col-btn.ativo { background: var(--bg-item-hover); color: var(--text-main); border-color: var(--border-color); opacity: 1; }
+    .toggle-col-btn.ativo.tipo-transporte { box-shadow: inset 3px 0 0 0 var(--cat-transporte); }
+    .toggle-col-btn.ativo.tipo-servicos   { box-shadow: inset 3px 0 0 0 var(--cat-servicos); }
+    .toggle-col-btn.ativo.tipo-noticias   { box-shadow: inset 3px 0 0 0 var(--cat-noticias); }
+    .toggle-col-btn.ativo.tipo-infra      { box-shadow: inset 3px 0 0 0 var(--cat-infra); }
+    .toggle-col-btn.ativo.tipo-favoritos  { box-shadow: inset 3px 0 0 0 var(--cat-favoritos); }
+    .toggle-col-btn:not(.ativo) { opacity: 0.55; }
     .toggle-col-btn:hover { opacity: 1; }
     .toggle-col-btn.dragging-btn { opacity: 0.3 !important; outline: 2px dashed var(--accent); }
     .toggle-col-btn.drag-over-btn { outline: 2px solid var(--accent); opacity: 1 !important; }
@@ -223,7 +224,7 @@
     .btn-scroll-nav:hover { border-color: var(--accent); color: var(--accent); }
     .btn-dedup { font-size: 11px; padding: 3px 9px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-body); color: var(--text-muted); cursor: pointer; transition: all 0.15s; font-family: inherit; white-space: nowrap; margin-left: auto; }
     .btn-dedup:hover { border-color: var(--accent); color: var(--accent); }
-    .btn-dedup.ativo { background: #64748b; color: #fff; border-color: transparent; }
+    .btn-dedup.ativo { background: var(--text-muted); color: var(--bg-body); border-color: transparent; }
 
     /* ============================================================ COLUNAS */
     .colunas { display: flex; gap: 12px; padding: 12px; align-items: stretch; overflow-x: auto; overflow-y: hidden; flex: 1 1 0; min-height: 0; scroll-snap-type: x proximity; scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--accent) var(--bg-busca); }
@@ -232,29 +233,20 @@
     .colunas::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; opacity: 0.7; }
     .colunas::-webkit-scrollbar-thumb:hover { opacity: 1; }
 
-    .coluna { flex: 0 0 var(--col-width); width: var(--col-width); background: var(--bg-coluna); border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04); overflow: hidden; transition: background-color 0.3s, box-shadow 0.2s; position: relative; display: flex; flex-direction: column; scroll-snap-align: start; }
+    .coluna { flex: 0 0 var(--col-width); width: var(--col-width); background: var(--bg-coluna); border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.03); overflow: hidden; transition: background-color 0.3s, box-shadow 0.2s; position: relative; display: flex; flex-direction: column; scroll-snap-align: start; }
 
     .colunas.duas-fileiras { display: grid; grid-template-rows: 1fr 1fr; grid-auto-flow: column; grid-auto-columns: var(--col-width); align-items: unset; }
     .colunas.duas-fileiras .coluna { width: 100%; height: 100%; }
     .colunas.duas-fileiras .col-expandida { grid-column: span 2; grid-row: span 2; flex: unset; width: 100%; }
 
-    .coluna.tipo-transporte { border-top: 4px solid var(--cat-transporte); }
-    .coluna.tipo-transporte .coluna-header h2 { color: var(--cat-transporte); }
-    .coluna.tipo-servicos   { border-top: 4px solid var(--cat-servicos); }
-    .coluna.tipo-servicos   .coluna-header h2 { color: var(--cat-servicos); }
-    .coluna.tipo-noticias   { border-top: 4px solid var(--cat-noticias); }
-    .coluna.tipo-noticias   .coluna-header h2 { color: var(--cat-noticias); }
-    .coluna.tipo-infra      { border-top: 4px solid var(--cat-infra); }
-    .coluna.tipo-infra      .coluna-header h2 { color: var(--cat-infra); }
-    .coluna.tipo-favoritos  { border-top: 4px solid var(--cat-favoritos); }
-    .coluna.tipo-favoritos  .coluna-header h2 { color: var(--cat-favoritos); }
+    .coluna.tipo-transporte { border-top: 3px solid var(--cat-transporte); }
+    .coluna.tipo-servicos   { border-top: 3px solid var(--cat-servicos); }
+    .coluna.tipo-noticias   { border-top: 3px solid var(--cat-noticias); }
+    .coluna.tipo-infra      { border-top: 3px solid var(--cat-infra); }
+    .coluna.tipo-favoritos  { border-top: 3px solid var(--cat-favoritos); }
 
     /* Special: Diário do Transporte com imagens */
-    .coluna.col-diario-sp { background: #fdf8f4; border-top: 4px solid var(--cat-noticias); }
-    .coluna.col-diario-sp .coluna-header { background: #f5eee6; }
-    .coluna.col-diario-sp .coluna-header h2 { color: var(--cat-noticias); }
-    body.dark-theme .coluna.col-diario-sp { background: #181818; }
-    body.dark-theme .coluna.col-diario-sp .coluna-header { background: #202020; }
+    .coluna.col-diario-sp .coluna-header { background: var(--bg-item-hover); }
 
     /* Minimize */
     .coluna.minimized .coluna-body { display: none; }
@@ -269,7 +261,7 @@
 
     .coluna-header { padding: 10px 13px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; cursor: grab; user-select: none; }
     .coluna-header:active { cursor: grabbing; }
-    .coluna-header h2 { margin: 0; font-size: 12px; pointer-events: none; font-weight: 700; letter-spacing: 0.01em; text-transform: uppercase; }
+    .coluna-header h2 { margin: 0; font-size: 12.5px; pointer-events: none; font-weight: 600; letter-spacing: 0.01em; color: var(--text-main); }
     .coluna-count { font-size: 10px; background: var(--bg-count); color: var(--text-count); padding: 2px 7px; border-radius: 20px; font-weight: 700; pointer-events: none; }
     .coluna-body { flex: 1 1 0; min-height: 0; overflow-y: auto; overflow-x: hidden; scrollbar-width: thin; scrollbar-color: var(--border-color) transparent; }
 
@@ -316,14 +308,13 @@
     .badge-nao-lido { display: inline-block; background: var(--accent); color: #fff; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 10px; margin-left: 4px; letter-spacing: 0.02em; }
     @keyframes fade-in-badge { from { opacity: 0; transform: scale(0.7); } to { opacity: 1; transform: scale(1); } }
 
-    .cache-aviso { background: #fff4e6; border-bottom: 1px solid #ffd49b; padding: 6px 14px; font-size: 11px; color: #92700a; display: flex; align-items: center; gap: 5px; }
-    body.dark-theme .cache-aviso { background: #2a1800; border-color: #5a3500; color: #d4aa40; }
+    .cache-aviso { background: var(--bg-item-hover); border-bottom: 1px solid var(--border-color); padding: 6px 14px; font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 5px; }
 
-    .item-duplicata { border-left: 3px solid #94a3b8; padding-left: calc(var(--item-padding-h) - 3px); }
-    .dup-info { font-size: 9px; color: #94a3b8; margin-top: 2px; }
+    .item-duplicata { border-left: 3px solid var(--border-color); padding-left: calc(var(--item-padding-h) - 3px); }
+    .dup-info { font-size: 9px; color: var(--text-muted); margin-top: 2px; }
     .item-duplicata.oculto-dup { display: none !important; }
 
-    mark { background: #ffd180; color: #000; border-radius: 2px; padding: 0 2px; }
+    mark { background: #ffd180; color: #2b2a28; border-radius: 2px; padding: 0 2px; }
     .coluna.col-oculta { display: none; }
 
     /* ============================================================ PAINEL ACESSO RÁPIDO (cols estáticas) */
@@ -363,9 +354,78 @@
     .sem-resultado.visivel { display: block; }
 
     /* ============================================================ TOAST */
-    .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(10px); background: #1a1a2e; color: #f0f0f0; padding: 8px 18px; border-radius: 6px; font-size: 12px; opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; z-index: 9999; white-space: nowrap; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-    body.dark-theme .toast { background: #f0f0f0; color: #1a1a2e; }
+    .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(10px); background: #2b2a28; color: #faf9f6; padding: 8px 18px; border-radius: 6px; font-size: 12px; opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; z-index: 9999; white-space: nowrap; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    body.dark-theme .toast { background: #e8e4dc; color: #221f1c; }
     .toast.visivel { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ============================================================
+       TOUCH — controles que só apareciam no :hover ficam visíveis
+       em qualquer dispositivo sem mouse (celular, tablet)
+    ============================================================ */
+    @media (hover: none) {
+      .btn-star,
+      .btn-col-refresh,
+      .btn-marcar-lidos,
+      .btn-col-expand,
+      .btn-minimizar { opacity: 0.55; }
+    }
+
+    /* ============================================================
+       MOBILE — colunas em tela cheia, uma por vez, com swipe
+    ============================================================ */
+    @media (max-width: 680px) {
+      .header-inner { padding: 8px 12px; flex-wrap: wrap; row-gap: 8px; }
+      header h1 { flex: 1 1 100%; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .h1-sp { font-size: 12px; }
+      .header-monitor { flex: 0 0 auto; padding: 0; min-width: 0; }
+      .header-monitor .monitor-status,
+      .header-monitor .monitor-sep,
+      .header-monitor .monitor-countdown { display: none; }
+      .header-actions { flex: 1 1 auto; gap: 5px; flex-wrap: wrap; justify-content: flex-end; }
+      .btn-header-icon { width: 32px; height: 32px; }
+      #btn-notif { width: auto; padding: 6px 8px; font-size: 10px; }
+      .btn-theme, .btn-config, .btn-busca-toggle { padding: 6px 9px; font-size: 11px; }
+
+      .busca-bar input { flex-basis: 100%; max-width: none; }
+      .bar-sep { display: none; }
+      .busca-bar.aberto { max-height: 220px; }
+      .config-panel.aberto { max-height: 420px; }
+
+      .btn-scroll-nav { display: none; }
+
+      .colunas,
+      .colunas.duas-fileiras {
+        display: flex;
+        flex-direction: row;
+        grid-auto-flow: unset;
+        scroll-snap-type: x mandatory;
+        padding: 0;
+        gap: 0;
+      }
+      .colunas .coluna,
+      .colunas.duas-fileiras .coluna {
+        flex: 0 0 100vw;
+        width: 100vw;
+        height: 100%;
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+      }
+      .colunas.duas-fileiras .col-expandida,
+      .coluna.col-expandida {
+        flex: 0 0 100vw !important;
+        width: 100vw !important;
+        grid-column: unset;
+        grid-row: unset;
+      }
+
+      .resize-handle { display: none; }
+
+      #col-tv .coluna-body, #tv-container { height: 100%; }
+      #tv-container iframe { height: 100% !important; }
+    }
   </style>
 </head>
 <body>
@@ -382,10 +442,10 @@
       </div>
       <div class="header-actions">
         <button id="btn-refresh-all" class="btn-header-icon" onclick="refreshManual()" title="Atualizar tudo agora (R)">↻</button>
-        <button id="btn-notif" class="btn-header-icon" onclick="toggleNotificacoes()" title="Ativar notificações">🔕</button>
-        <button id="theme-toggle" class="btn-theme">🌙 Escuro</button>
-        <button id="btn-busca-toggle" class="btn-busca-toggle" onclick="toggleBusca()">🔍 Buscar</button>
-        <button id="btn-config" class="btn-config" onclick="toggleConfig()">⚙️ Layout</button>
+        <button id="btn-notif" class="btn-header-icon" onclick="toggleNotificacoes()" title="Ativar notificações">Notif</button>
+        <button id="theme-toggle" class="btn-theme">Escuro</button>
+        <button id="btn-busca-toggle" class="btn-busca-toggle" onclick="toggleBusca()">Buscar</button>
+        <button id="btn-config" class="btn-config" onclick="toggleConfig()">Layout</button>
       </div>
     </div>
   </header>
@@ -427,7 +487,7 @@
   </div>
 
   <div class="busca-bar" id="busca-bar">
-    <label>🔍 Filtrar:</label>
+    <label>Filtrar:</label>
     <input type="text" id="campo-busca" placeholder="Palavra-chave e Enter... (atalho: /)" />
     <button onclick="aplicarFiltros()">Buscar</button>
     <button class="btn-limpar" onclick="limpar()">✕ Limpar</button>
@@ -437,7 +497,7 @@
     <button class="date-btn"       data-date="7d"    onclick="setDateFilter(this)">7 dias</button>
     <button class="date-btn"       data-date="30d"   onclick="setDateFilter(this)">30 dias</button>
     <div class="bar-sep"></div>
-    <button class="btn-copiar-link" id="btn-copiar-link" onclick="copiarLink()">🔗 Copiar link</button>
+    <button class="btn-copiar-link" id="btn-copiar-link" onclick="copiarLink()">Copiar link</button>
   </div>
 
   <div class="resultado-bar" id="resultado-bar">
@@ -448,23 +508,23 @@
   <div class="toggle-bar" id="toggle-bar">
     <button class="btn-scroll-nav" onclick="document.getElementById('colunas-container').scrollTo({left:0,behavior:'smooth'})" title="Ir para o início">◀◀</button>
     <button class="btn-scroll-nav" onclick="document.getElementById('colunas-container').scrollTo({left:99999,behavior:'smooth'})" title="Ir para o final">▶▶</button>
-    <label>📋 Colunas:</label>
-    <button class="toggle-col-btn tipo-noticias ativo"   data-col="col-tv"         onclick="toggleColuna(this, event)">🌧️ Windy</button>
-    <button class="toggle-col-btn tipo-servicos ativo"   data-col="col-ar"         onclick="toggleColuna(this, event)">🌫️ Ar</button>
-    <button class="toggle-col-btn tipo-servicos ativo"   data-col="col-clima"      onclick="toggleColuna(this, event)">🌦️ Clima</button>
-    <button class="toggle-col-btn tipo-servicos ativo"   data-col="col-mananciais" onclick="toggleColuna(this, event)">💧 Mananciais</button>
-    <button class="toggle-col-btn tipo-noticias ativo"   data-col="col-g1"         onclick="toggleColuna(this, event)">📰 G1 SP</button>
-    <button class="toggle-col-btn tipo-noticias ativo"   data-col="col-assembleia" onclick="toggleColuna(this, event)">🏛️ AL-SP</button>
-    <button class="toggle-col-btn tipo-noticias ativo"   data-col="col-diario"     onclick="toggleColuna(this, event)">🚇 Diário Transp.</button>
-    <button class="toggle-col-btn tipo-noticias ativo"   data-col="col-camara"     onclick="toggleColuna(this, event)">🏙️ Câmara SP</button>
-    <button class="toggle-col-btn tipo-transporte ativo" data-col="col-trens"      onclick="toggleColuna(this, event)">🚉 Trens & Metrô</button>
-    <button class="toggle-col-btn tipo-transporte ativo" data-col="col-cet"        onclick="toggleColuna(this, event)">🚦 CET-SP</button>
-    <button class="toggle-col-btn tipo-transporte ativo" data-col="col-sptrans"    onclick="toggleColuna(this, event)">🚌 SPTrans</button>
-    <button class="toggle-col-btn tipo-transporte ativo" data-col="col-waze"       onclick="toggleColuna(this, event)">🗺️ Waze</button>
-    <button class="toggle-col-btn tipo-transporte ativo" data-col="col-rodovias"   onclick="toggleColuna(this, event)">🛣️ Rodovias</button>
-    <button class="toggle-col-btn tipo-transporte ativo" data-col="col-voos"       onclick="toggleColuna(this, event)">✈️ Voos</button>
-    <button class="toggle-col-btn tipo-infra ativo"      data-col="col-enel"       onclick="toggleColuna(this, event)">⚡ ENEL Luz</button>
-    <button class="toggle-col-btn tipo-favoritos"        data-col="col-favoritos"  onclick="toggleColuna(this, event)">⭐ Favoritos</button>
+    <label>Colunas:</label>
+    <button class="toggle-col-btn tipo-noticias ativo"   data-col="col-tv"         onclick="toggleColuna(this, event)">Windy</button>
+    <button class="toggle-col-btn tipo-servicos ativo"   data-col="col-ar"         onclick="toggleColuna(this, event)">Ar</button>
+    <button class="toggle-col-btn tipo-servicos ativo"   data-col="col-clima"      onclick="toggleColuna(this, event)">Clima</button>
+    <button class="toggle-col-btn tipo-servicos ativo"   data-col="col-mananciais" onclick="toggleColuna(this, event)">Mananciais</button>
+    <button class="toggle-col-btn tipo-noticias ativo"   data-col="col-g1"         onclick="toggleColuna(this, event)">G1 SP</button>
+    <button class="toggle-col-btn tipo-noticias ativo"   data-col="col-assembleia" onclick="toggleColuna(this, event)">AL-SP</button>
+    <button class="toggle-col-btn tipo-noticias ativo"   data-col="col-diario"     onclick="toggleColuna(this, event)">Diário Transp.</button>
+    <button class="toggle-col-btn tipo-noticias ativo"   data-col="col-camara"     onclick="toggleColuna(this, event)">Câmara SP</button>
+    <button class="toggle-col-btn tipo-transporte ativo" data-col="col-trens"      onclick="toggleColuna(this, event)">Trens & Metrô</button>
+    <button class="toggle-col-btn tipo-transporte ativo" data-col="col-cet"        onclick="toggleColuna(this, event)">CET-SP</button>
+    <button class="toggle-col-btn tipo-transporte ativo" data-col="col-sptrans"    onclick="toggleColuna(this, event)">SPTrans</button>
+    <button class="toggle-col-btn tipo-transporte ativo" data-col="col-waze"       onclick="toggleColuna(this, event)">Waze</button>
+    <button class="toggle-col-btn tipo-transporte ativo" data-col="col-rodovias"   onclick="toggleColuna(this, event)">Rodovias</button>
+    <button class="toggle-col-btn tipo-transporte ativo" data-col="col-voos"       onclick="toggleColuna(this, event)">Voos</button>
+    <button class="toggle-col-btn tipo-infra ativo"      data-col="col-enel"       onclick="toggleColuna(this, event)">ENEL Luz</button>
+    <button class="toggle-col-btn tipo-favoritos"        data-col="col-favoritos"  onclick="toggleColuna(this, event)">Favoritos</button>
     <button class="btn-dedup" id="btn-dedup" onclick="toggleDedup()">⇄ Ocultar duplicatas</button>
   </div>
 
@@ -474,7 +534,7 @@
     <div class="coluna tipo-noticias" id="col-tv" draggable="true">
       <div class="resize-handle"></div>
       <div class="coluna-header">
-        <h2>🌧️ Radar de Chuva — Windy <span class="col-status-icon" id="status-col-tv"></span></h2>
+        <h2>Radar de Chuva — Windy <span class="col-status-icon" id="status-col-tv"></span></h2>
         <div style="display:flex;align-items:center;gap:4px">
           <button class="btn-col-refresh" id="refresh-col-tv" onclick="refreshColuna('col-tv')" title="Recarregar">↻</button>
           <span class="coluna-count" id="count-tv">—</span>
@@ -490,7 +550,7 @@
     <div class="coluna tipo-servicos" id="col-ar" draggable="true">
       <div class="resize-handle"></div>
       <div class="coluna-header">
-        <h2>🌫️ Qualidade do Ar <span class="col-status-icon" id="status-col-ar"></span></h2>
+        <h2>Qualidade do Ar <span class="col-status-icon" id="status-col-ar"></span></h2>
         <div style="display:flex;align-items:center;gap:4px">
           <button class="btn-col-refresh" id="refresh-col-ar" onclick="refreshColuna('col-ar')" title="Atualizar">↻</button>
           <span class="coluna-count" id="count-ar">—</span>
@@ -506,7 +566,7 @@
     <div class="coluna tipo-servicos" id="col-clima" draggable="true">
       <div class="resize-handle"></div>
       <div class="coluna-header">
-        <h2>🌦️ Clima — SP <span class="col-status-icon" id="status-col-clima"></span></h2>
+        <h2>Clima — SP <span class="col-status-icon" id="status-col-clima"></span></h2>
         <div style="display:flex;align-items:center;gap:4px">
           <button class="btn-col-refresh" id="refresh-col-clima" onclick="refreshColuna('col-clima')" title="Atualizar">↻</button>
           <span class="coluna-count" id="count-clima">—</span>
@@ -522,7 +582,7 @@
     <div class="coluna tipo-servicos" id="col-mananciais" draggable="true">
       <div class="resize-handle"></div>
       <div class="coluna-header">
-        <h2>💧 Mananciais <span class="col-status-icon" id="status-col-mananciais"></span></h2>
+        <h2>Mananciais <span class="col-status-icon" id="status-col-mananciais"></span></h2>
         <div style="display:flex;align-items:center;gap:4px">
           <button class="btn-col-refresh" id="refresh-col-mananciais" onclick="refreshColuna('col-mananciais')" title="Atualizar">↻</button>
           <span class="coluna-count" id="count-mananciais">—</span>
@@ -538,7 +598,7 @@
     <div class="coluna tipo-noticias" id="col-g1" draggable="true">
       <div class="resize-handle"></div>
       <div class="coluna-header">
-        <h2>📰 G1 São Paulo <span class="col-status-icon" id="status-col-g1"></span></h2>
+        <h2>G1 São Paulo <span class="col-status-icon" id="status-col-g1"></span></h2>
         <div style="display:flex;align-items:center;gap:4px">
           <button class="btn-marcar-lidos" onclick="marcarTodosLidos('col-g1')" title="Marcar todos como lidos">✓</button>
           <button class="btn-col-refresh" id="refresh-col-g1" onclick="refreshColuna('col-g1')" title="Atualizar">↻</button>
@@ -556,7 +616,7 @@
     <div class="coluna tipo-noticias" id="col-assembleia" draggable="true">
       <div class="resize-handle"></div>
       <div class="coluna-header">
-        <h2>🏛️ Assembleia Legislativa SP <span class="col-status-icon" id="status-col-assembleia"></span></h2>
+        <h2>Assembleia Legislativa SP <span class="col-status-icon" id="status-col-assembleia"></span></h2>
         <div style="display:flex;align-items:center;gap:4px">
           <button class="btn-marcar-lidos" onclick="marcarTodosLidos('col-assembleia')" title="Marcar todos como lidos">✓</button>
           <button class="btn-col-refresh" id="refresh-col-assembleia" onclick="refreshColuna('col-assembleia')" title="Atualizar">↻</button>
@@ -574,7 +634,7 @@
     <div class="coluna col-diario-sp tipo-noticias" id="col-diario" draggable="true">
       <div class="resize-handle"></div>
       <div class="coluna-header">
-        <h2>🚇 Diário do Transporte <span class="col-status-icon" id="status-col-diario"></span></h2>
+        <h2>Diário do Transporte <span class="col-status-icon" id="status-col-diario"></span></h2>
         <div style="display:flex;align-items:center;gap:4px">
           <button class="btn-marcar-lidos" onclick="marcarTodosLidos('col-diario')" title="Marcar todos como lidos">✓</button>
           <button class="btn-col-refresh" id="refresh-col-diario" onclick="refreshColuna('col-diario')" title="Atualizar">↻</button>
@@ -592,7 +652,7 @@
     <div class="coluna tipo-noticias" id="col-camara" draggable="true">
       <div class="resize-handle"></div>
       <div class="coluna-header">
-        <h2>🏙️ Câmara Municipal SP <span class="col-status-icon" id="status-col-camara"></span></h2>
+        <h2>Câmara Municipal SP <span class="col-status-icon" id="status-col-camara"></span></h2>
         <div style="display:flex;align-items:center;gap:4px">
           <button class="btn-marcar-lidos" onclick="marcarTodosLidos('col-camara')" title="Marcar todos como lidos">✓</button>
           <button class="btn-col-refresh" id="refresh-col-camara" onclick="refreshColuna('col-camara')" title="Atualizar">↻</button>
@@ -610,7 +670,7 @@
     <div class="coluna tipo-transporte" id="col-trens" draggable="true">
       <div class="resize-handle"></div>
       <div class="coluna-header">
-        <h2>🚉 Trens & Metrô <span class="col-status-icon" id="status-col-trens"></span></h2>
+        <h2>Trens & Metrô <span class="col-status-icon" id="status-col-trens"></span></h2>
         <div style="display:flex;align-items:center;gap:4px">
           <button class="btn-col-refresh" id="refresh-col-trens" onclick="refreshColuna('col-trens')" title="Atualizar">↻</button>
           <span class="coluna-count" id="count-trens">—</span>
@@ -626,7 +686,7 @@
     <div class="coluna tipo-transporte" id="col-cet" draggable="true">
       <div class="resize-handle"></div>
       <div class="coluna-header">
-        <h2>🚦 CET-SP <span class="col-status-icon" id="status-col-cet"></span></h2>
+        <h2>CET-SP <span class="col-status-icon" id="status-col-cet"></span></h2>
         <div style="display:flex;align-items:center;gap:4px">
           <button class="btn-col-refresh" id="refresh-col-cet" onclick="refreshColuna('col-cet')" title="Atualizar">↻</button>
           <span class="coluna-count" id="count-cet">—</span>
@@ -642,7 +702,7 @@
     <div class="coluna tipo-transporte" id="col-sptrans" draggable="true">
       <div class="resize-handle"></div>
       <div class="coluna-header">
-        <h2>🚌 SPTrans — Ônibus <span class="col-status-icon" id="status-col-sptrans"></span></h2>
+        <h2>SPTrans — Ônibus <span class="col-status-icon" id="status-col-sptrans"></span></h2>
         <div style="display:flex;align-items:center;gap:4px">
           <button class="btn-marcar-lidos" onclick="marcarTodosLidos('col-sptrans')" title="Marcar todos como lidos">✓</button>
           <button class="btn-col-refresh" id="refresh-col-sptrans" onclick="refreshColuna('col-sptrans')" title="Atualizar">↻</button>
@@ -660,7 +720,7 @@
     <div class="coluna tipo-transporte" id="col-waze" draggable="true">
       <div class="resize-handle"></div>
       <div class="coluna-header">
-        <h2>🗺️ Waze Live <span class="col-status-icon" id="status-col-waze"></span></h2>
+        <h2>Waze Live <span class="col-status-icon" id="status-col-waze"></span></h2>
         <div style="display:flex;align-items:center;gap:4px">
           <button class="btn-col-refresh" id="refresh-col-waze" onclick="refreshColuna('col-waze')" title="Atualizar">↻</button>
           <span class="coluna-count" id="count-waze">—</span>
@@ -676,7 +736,7 @@
     <div class="coluna tipo-transporte" id="col-rodovias" draggable="true">
       <div class="resize-handle"></div>
       <div class="coluna-header">
-        <h2>🛣️ Rodovias SP <span class="col-status-icon" id="status-col-rodovias"></span></h2>
+        <h2>Rodovias SP <span class="col-status-icon" id="status-col-rodovias"></span></h2>
         <div style="display:flex;align-items:center;gap:4px">
           <button class="btn-col-refresh" id="refresh-col-rodovias" onclick="refreshColuna('col-rodovias')" title="Atualizar">↻</button>
           <span class="coluna-count" id="count-rodovias">—</span>
@@ -692,7 +752,7 @@
     <div class="coluna tipo-transporte" id="col-voos" draggable="true">
       <div class="resize-handle"></div>
       <div class="coluna-header">
-        <h2>✈️ Voos ao Vivo — SP <span class="col-status-icon" id="status-col-voos"></span></h2>
+        <h2>Voos ao Vivo — SP <span class="col-status-icon" id="status-col-voos"></span></h2>
         <div style="display:flex;align-items:center;gap:4px">
           <button class="btn-col-refresh" id="refresh-col-voos" onclick="refreshColuna('col-voos')" title="Recarregar">↻</button>
           <span class="coluna-count" id="count-voos">—</span>
@@ -708,7 +768,7 @@
     <div class="coluna tipo-infra" id="col-enel" draggable="true">
       <div class="resize-handle"></div>
       <div class="coluna-header">
-        <h2>⚡ ENEL Falta de Luz <span class="col-status-icon" id="status-col-enel"></span></h2>
+        <h2>ENEL Falta de Luz <span class="col-status-icon" id="status-col-enel"></span></h2>
         <div style="display:flex;align-items:center;gap:4px">
           <button class="btn-col-refresh" id="refresh-col-enel" onclick="refreshColuna('col-enel')" title="Atualizar">↻</button>
           <span class="coluna-count" id="count-enel">—</span>
@@ -724,7 +784,7 @@
     <div class="coluna tipo-favoritos col-oculta" id="col-favoritos" draggable="true">
       <div class="resize-handle"></div>
       <div class="coluna-header">
-        <h2>⭐ Favoritos <span class="col-status-icon" id="status-col-favoritos"></span></h2>
+        <h2>Favoritos <span class="col-status-icon" id="status-col-favoritos"></span></h2>
         <div style="display:flex;align-items:center;gap:4px">
           <button class="btn-marcar-lidos" onclick="marcarTodosLidos('col-favoritos')" title="Marcar todos como lidos">✓</button>
           <span class="coluna-count" id="count-favoritos">—</span>
@@ -1002,17 +1062,17 @@
     function atualizarBotaoNotif() {
       const btn = document.getElementById('btn-notif');
       if (!('Notification' in window)) { btn.style.display = 'none'; return; }
-      if (Notification.permission === 'granted') { btn.textContent = '🔔'; btn.title = 'Notificações ativas'; btn.classList.add('notif-ativo'); btn.classList.remove('notif-negado'); }
-      else if (Notification.permission === 'denied') { btn.textContent = '🔇'; btn.title = 'Notificações bloqueadas'; btn.classList.add('notif-negado'); btn.classList.remove('notif-ativo'); }
-      else { btn.textContent = '🔕'; btn.title = 'Ativar notificações'; btn.classList.remove('notif-ativo', 'notif-negado'); }
+      if (Notification.permission === 'granted') { btn.textContent = 'Notif'; btn.title = 'Notificações ativas'; btn.classList.add('notif-ativo'); btn.classList.remove('notif-negado'); }
+      else if (Notification.permission === 'denied') { btn.textContent = 'Notif'; btn.title = 'Notificações bloqueadas'; btn.classList.add('notif-negado'); btn.classList.remove('notif-ativo'); }
+      else { btn.textContent = 'Notif'; btn.title = 'Ativar notificações'; btn.classList.remove('notif-ativo', 'notif-negado'); }
     }
     async function toggleNotificacoes() {
       if (!('Notification' in window)) { showToast('Notificações não suportadas'); return; }
       if (Notification.permission === 'denied') { showToast('Bloqueadas — desbloqueie nas configurações'); return; }
-      if (Notification.permission === 'granted') { showToast('Notificações já estão ativas 🔔'); return; }
+      if (Notification.permission === 'granted') { showToast('Notificações já estão ativas'); return; }
       const perm = await Notification.requestPermission();
       atualizarBotaoNotif();
-      if (perm === 'granted') showToast('Notificações ativadas! 🔔');
+      if (perm === 'granted') showToast('Notificações ativadas!');
       else showToast('Permissão negada');
     }
     function notificarNovos(colId, links) {
@@ -1141,7 +1201,7 @@
           }
 
           const cats = Array.from(item.querySelectorAll("category")).map(c => c.textContent).filter(Boolean).slice(0,2).join(', ');
-          const extraHtml = cats ? `<div class="fonte">🏷 ${cats}</div>` : '';
+          const extraHtml = cats ? `<div class="fonte">${cats}</div>` : '';
 
           const data = { titulo, link, isodate, imgUrl, colId, extraHtml };
           cacheItems.push(data);
@@ -1162,7 +1222,7 @@
           atualizarBadgeNaoLidos(colId);
           setColStatus(colId, 'cache');
         } else {
-          container.innerHTML = `<div class="estado">Não foi possível carregar.<br><a href="https://diariodotransporte.com.br/" target="_blank" style="color:var(--accent)">🔗 Abrir Diário do Transporte</a></div>`;
+          container.innerHTML = `<div class="estado">Não foi possível carregar.<br><a href="https://diariodotransporte.com.br/" target="_blank" style="color:var(--accent)">Abrir Diário do Transporte</a></div>`;
         }
         throw e;
       }
@@ -1193,7 +1253,7 @@
         const header = document.createElement('div');
         header.innerHTML = `
           <a class="painel-card" href="https://www.diretodostrens.com.br/" target="_blank" rel="noopener">
-            <div class="painel-card-titulo">🔴 Ver status ao vivo</div>
+            <div class="painel-card-titulo"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#ef4444;margin-right:6px;"></span>Ver status ao vivo</div>
             <div class="painel-card-desc">Situação em tempo real de todas as linhas de metrô, CPTM e ônibus intermunicipais</div>
             <span class="painel-card-tag">Acesso direto</span>
           </a>`;
@@ -1411,7 +1471,7 @@
         document.getElementById("count-clima").textContent = n + ' dias';
         setColStatus('col-clima', 'ok');
       } catch(e) {
-        container.innerHTML = `<div class="estado">Não foi possível carregar o clima.<br><a href="https://weather.com/pt-BR/weather/today/l/-23.5505,-46.6333" target="_blank" style="color:var(--accent)">🔗 Ver previsão</a></div>`;
+        container.innerHTML = `<div class="estado">Não foi possível carregar o clima.<br><a href="https://weather.com/pt-BR/weather/today/l/-23.5505,-46.6333" target="_blank" style="color:var(--accent)">Ver previsão</a></div>`;
         throw e;
       }
     }
@@ -1557,19 +1617,13 @@
       if (!container) return;
       const url = 'https://www.flightradar24.com/?lat=-23.43&lng=-46.47&z=9';
       container.innerHTML = `
-        <a href="${url}" target="_blank" rel="noopener"
-           style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-decoration:none;color:inherit;padding:32px 16px;min-height:200px;background:linear-gradient(135deg,#0a0e27 0%,#0d1b3e 60%,#0a2a4a 100%);">
-          <div style="font-size:56px;line-height:1;">✈️</div>
-          <div style="text-align:center;">
-            <div style="color:#fff;font-size:15px;font-weight:700;margin-bottom:6px;">Flightradar24 — São Paulo</div>
-            <div style="color:#7ec8e3;font-size:12px;">Voos em tempo real sobre GRU / CGH</div>
-          </div>
-          <div style="background:#f97316;color:#fff;font-size:12px;font-weight:700;padding:8px 20px;border-radius:20px;">
-            Abrir mapa ao vivo →
-          </div>
+        <a class="painel-card" href="${url}" target="_blank" rel="noopener">
+          <div class="painel-card-titulo">Flightradar24 — São Paulo</div>
+          <div class="painel-card-desc">Voos em tempo real sobre GRU / CGH</div>
+          <span class="painel-card-tag">Ao vivo</span>
         </a>`;
       if (sem) sem.style.display = 'none';
-      if (count) count.textContent = '✈️';
+      if (count) count.textContent = '—';
       setColStatus('col-voos', 'ok');
     }
 
@@ -1587,7 +1641,7 @@
         style="border:0;display:block;"
         title="Radar de Chuva — Windy"></iframe>`;
       if (sem) sem.style.display = 'none';
-      if (count) count.textContent = '🌧️';
+      if (count) count.textContent = '—';
       setColStatus('col-tv', 'ok');
     }
 
@@ -1661,7 +1715,7 @@
           const link = (linkEl?.getAttribute("href") || linkEl?.textContent || "").trim();
           const isodate = item.querySelector("pubDate")?.textContent || "";
           const cats = Array.from(item.querySelectorAll("category")).map(c => c.textContent).filter(Boolean).slice(0,2).join(', ');
-          const extraHtml = cats ? `<div class="fonte">🏷 ${cats}</div>` : '';
+          const extraHtml = cats ? `<div class="fonte">${cats}</div>` : '';
           const data = { titulo, link, isodate, imgUrl: '', colId, extraHtml };
           cacheItems.push(data);
           container.appendChild(criarItem(data));
@@ -1724,7 +1778,7 @@
           const link = (linkEl?.getAttribute("href") || linkEl?.textContent || "").trim();
           const isodate = item.querySelector("pubDate")?.textContent || "";
           const cats = Array.from(item.querySelectorAll("category")).map(c => c.textContent).filter(Boolean).slice(0,2).join(', ');
-          const extraHtml = cats ? `<div class="fonte">🏷 ${cats}</div>` : '';
+          const extraHtml = cats ? `<div class="fonte">${cats}</div>` : '';
           const data = { titulo, link, isodate, imgUrl: '', colId, extraHtml };
           cacheItems.push(data);
           container.appendChild(criarItem(data));
@@ -2124,7 +2178,7 @@
         const btn = document.getElementById('btn-copiar-link');
         btn.classList.add('copiado');
         btn.textContent = '✓ Copiado!';
-        setTimeout(() => { btn.classList.remove('copiado'); btn.textContent = '🔗 Copiar link'; }, 2000);
+        setTimeout(() => { btn.classList.remove('copiado'); btn.textContent = 'Copiar link'; }, 2000);
       }).catch(() => showToast('Não foi possível copiar'));
     }
 
@@ -2250,10 +2304,10 @@
     function inicializarTema() {
       const btn = document.getElementById('theme-toggle');
       const dark = localStorage.getItem('monitor-sp-tema') === 'dark';
-      if (dark) { document.body.classList.add('dark-theme'); btn.textContent = '☀️ Claro'; }
+      if (dark) { document.body.classList.add('dark-theme'); btn.textContent = 'Claro'; }
       btn.addEventListener('click', () => {
         const isDark = document.body.classList.toggle('dark-theme');
-        btn.textContent = isDark ? '☀️ Claro' : '🌙 Escuro';
+        btn.textContent = isDark ? 'Claro' : 'Escuro';
         try { localStorage.setItem('monitor-sp-tema', isDark ? 'dark' : 'light'); } catch(e) {}
       });
     }
