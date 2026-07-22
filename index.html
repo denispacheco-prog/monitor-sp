@@ -25,7 +25,7 @@
       --text-header:   var(--text-main);
       --bg-coluna:     #fffefb;
       --bg-item-hover: #f3f1ea;
-      --link-color:    var(--accent);
+      --link-color:    var(--text-main);
       --bg-count:      #f0eee6;
       --text-count:    var(--text-muted);
       --bg-busca:      var(--bg-body);
@@ -57,7 +57,7 @@
       --text-header:   var(--text-main);
       --bg-coluna:     #26221d;
       --bg-item-hover: #2a2620;
-      --link-color:    var(--accent);
+      --link-color:    var(--text-main);
       --bg-count:      #2f2b25;
       --text-count:    var(--text-muted);
       --bg-busca:      var(--bg-body);
@@ -187,7 +187,7 @@
     .toggle-bar { background: var(--bg-busca); border-bottom: 1px solid var(--border-color); padding: 7px 20px; display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; cursor: grab; transition: background-color 0.3s; }
     .toggle-bar:active { cursor: grabbing; }
     .toggle-bar::-webkit-scrollbar { display: none; }
-    .toggle-bar label { font-size: 11px; font-weight: 700; color: var(--text-muted); white-space: nowrap; margin-right: 2px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .toggle-bar label { font-size: 11px; font-weight: 600; color: var(--text-muted); white-space: nowrap; margin-right: 2px; }
     .toggle-col-btn { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; padding: 3px 9px 3px 11px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-body); color: var(--text-muted); cursor: pointer; transition: background 0.15s, color 0.15s, border-color 0.15s, opacity 0.15s, box-shadow 0.15s; user-select: none; font-family: inherit; font-weight: 500; white-space: nowrap; flex-shrink: 0; }
     .toggle-col-btn.ativo { background: color-mix(in srgb, var(--text-muted) 14%, transparent); color: var(--text-main); border-color: transparent; opacity: 1; }
     .toggle-col-btn.ativo.tipo-transporte { background: color-mix(in srgb, var(--cat-transporte) 16%, transparent); color: var(--cat-transporte); }
@@ -203,7 +203,7 @@
     .btn-scroll-nav:hover { border-color: var(--accent); color: var(--accent); }
     .btn-dedup { font-size: 11px; padding: 3px 9px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-body); color: var(--text-muted); cursor: pointer; transition: all 0.15s; font-family: inherit; white-space: nowrap; margin-left: auto; }
     .btn-dedup:hover { border-color: var(--accent); color: var(--accent); }
-    .btn-dedup.ativo { background: var(--text-muted); color: var(--bg-body); border-color: transparent; }
+    .btn-dedup.ativo { background: color-mix(in srgb, var(--text-muted) 18%, transparent); color: var(--text-main); border-color: transparent; }
 
     /* ============================================================ COLUNAS */
     .colunas { display: flex; gap: 12px; padding: 12px; align-items: stretch; overflow-x: auto; overflow-y: hidden; flex: 1 1 0; min-height: 0; scroll-snap-type: x proximity; scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--accent) var(--bg-busca); }
@@ -409,7 +409,7 @@
 <body>
 
   <header>
-    <h1>SP Monitor da Cidade</h1>
+    <h1>Monitor SP</h1>
     <div class="header-monitor">
       <span class="monitor-dot" id="monitor-dot"></span>
       <span class="monitor-status" id="monitor-status">Inicializando...</span>
@@ -481,8 +481,6 @@
   </div>
 
   <div class="toggle-bar" id="toggle-bar">
-    <button class="btn-scroll-nav" onclick="document.getElementById('colunas-container').scrollTo({left:0,behavior:'smooth'})" title="Ir para o início">◀◀</button>
-    <button class="btn-scroll-nav" onclick="document.getElementById('colunas-container').scrollTo({left:99999,behavior:'smooth'})" title="Ir para o final">▶▶</button>
     <label>Colunas:</label>
     <button class="toggle-col-btn tipo-noticias ativo"   data-col="col-tv"         onclick="toggleColuna(this, event)">Windy</button>
     <button class="toggle-col-btn tipo-servicos ativo"   data-col="col-ar"         onclick="toggleColuna(this, event)">Ar</button>
@@ -500,6 +498,8 @@
     <button class="toggle-col-btn tipo-transporte ativo" data-col="col-voos"       onclick="toggleColuna(this, event)">Voos</button>
     <button class="toggle-col-btn tipo-infra ativo"      data-col="col-enel"       onclick="toggleColuna(this, event)">ENEL Luz</button>
     <button class="toggle-col-btn tipo-favoritos"        data-col="col-favoritos"  onclick="toggleColuna(this, event)">Favoritos</button>
+    <button class="btn-scroll-nav" onclick="document.getElementById('colunas-container').scrollTo({left:0,behavior:'smooth'})" title="Ir para o início">◀◀</button>
+    <button class="btn-scroll-nav" onclick="document.getElementById('colunas-container').scrollTo({left:99999,behavior:'smooth'})" title="Ir para o final">▶▶</button>
     <button class="btn-dedup" id="btn-dedup" onclick="toggleDedup()">⇄ Ocultar duplicatas</button>
   </div>
 
