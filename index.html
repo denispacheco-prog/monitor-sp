@@ -31,6 +31,10 @@
       --cat-infra:      #8a6220;
       --cat-favoritos:  #c98a2c;
       --chuva:          #4a7fb5;
+      /* seções do acesso rápido */
+      --sec-ameixa:     #87557f;
+      --sec-ocre:       #a87a12;
+      --sec-petroleo:   #2f7a78;
       /* layout */
       --gutter:   20px;
       --gap:      14px;
@@ -55,6 +59,9 @@
       --cat-infra:      #d1a355;
       --cat-favoritos:  #dba955;
       --chuva:          #7fb0e0;
+      --sec-ameixa:     #c597bd;
+      --sec-ocre:       #d9ad4f;
+      --sec-petroleo:   #6cbab5;
     }
 
     /* ============================================================ BASE */
@@ -278,19 +285,22 @@
     /* ============================================================ ACESSO RÁPIDO */
     .acesso-secoes { padding: 2px 14px 16px; display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
     .acesso-secao h3 { margin: 0 0 8px; font-size: 11px; font-weight: 700; color: var(--cat); letter-spacing: 0.04em; text-transform: uppercase; }
-    .acesso-secao.tipo-transporte { --cat: var(--cat-transporte); }
-    .acesso-secao.tipo-servicos   { --cat: var(--cat-servicos); }
-    .acesso-secao.tipo-infra      { --cat: var(--cat-infra); }
+    /* cada seção com um matiz próprio dentro da paleta terrosa */
+    .acesso-secao.sec-transito  { --cat: var(--cat-transporte); }
+    .acesso-secao.sec-publico   { --cat: var(--sec-ameixa); }
+    .acesso-secao.sec-rodovias  { --cat: var(--sec-ocre); }
+    .acesso-secao.sec-agua      { --cat: var(--sec-petroleo); }
     .acesso-tiles { display: grid; gap: 6px; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
     .atalho {
       display: flex; flex-direction: column; justify-content: space-between; gap: 4px;
       padding: 9px 11px; border-radius: 8px; min-height: 58px;
-      background: color-mix(in srgb, var(--cat) 6%, var(--bg-card));
-      border: 1px solid color-mix(in srgb, var(--cat) 14%, var(--border-color));
+      background: color-mix(in srgb, var(--cat) 11%, var(--bg-card));
+      border: 1px solid color-mix(in srgb, var(--cat) 24%, var(--border-color));
+      border-left: 3px solid var(--cat);
       text-decoration: none; color: var(--text-main);
       transition: background 0.15s, border-color 0.15s, transform 0.15s;
     }
-    .atalho:hover { background: color-mix(in srgb, var(--cat) 13%, var(--bg-card)); border-color: color-mix(in srgb, var(--cat) 35%, var(--border-color)); transform: translateY(-1px); }
+    .atalho:hover { background: color-mix(in srgb, var(--cat) 20%, var(--bg-card)); border-color: color-mix(in srgb, var(--cat) 45%, var(--border-color)); border-left-color: var(--cat); transform: translateY(-1px); }
     .atalho-nome { font-size: 12.5px; font-weight: 600; line-height: 1.3; }
     .atalho-tag { font-size: 10px; color: var(--cat); font-weight: 600; }
 
@@ -519,7 +529,7 @@
     ];
 
     const ACESSO_RAPIDO = [
-      { secao: 'Trânsito', tipo: 'tipo-transporte', links: [
+      { secao: 'Trânsito', tipo: 'sec-transito', links: [
         { nome: 'Trânsito agora',          url: 'https://www.cetsp.com.br/transito-agora/transito-nas-principais-vias.aspx', desc: 'Situação do trânsito em tempo real na cidade de SP', tag: 'CET' },
         { nome: 'Câmeras ao vivo',         url: 'https://cameras.cetsp.com.br/', desc: 'Imagens das câmeras de monitoramento da CET', tag: 'CET' },
         { nome: 'Waze Live Map',           url: 'https://www.waze.com/pt-BR/live-map/directions?to=ll.23.5505%2C-46.6333', desc: 'Trânsito, acidentes, radares e alertas de usuários em SP', tag: 'Waze' },
@@ -528,7 +538,7 @@
         { nome: 'Multas',                  url: 'https://www.cetsp.com.br/consultas/multas.aspx', desc: 'Consulta de multas de trânsito', tag: 'CET' },
         { nome: 'Fiscalização eletrônica', url: 'https://www.cetsp.com.br/consultas/fiscalizacao-eletronica-do-transito.aspx', desc: 'Radares, lombadas e pontos de fiscalização', tag: 'CET' },
       ]},
-      { secao: 'Transporte público', tipo: 'tipo-transporte', links: [
+      { secao: 'Transporte público', tipo: 'sec-publico', links: [
         { nome: 'Metrô — status das linhas', url: 'https://www.metro.sp.gov.br/servicos/status.aspx', desc: 'Status oficial das linhas 1, 2, 3, 5 e 15', tag: 'Metrô' },
         { nome: 'CPTM',                      url: 'https://www.cptm.sp.gov.br/', desc: 'Linhas 7, 8, 9, 10, 11, 12 e 13', tag: 'Trem' },
         { nome: 'ViaQuatro',                 url: 'https://www.viaquatro.com.br/', desc: 'Operação da linha 4-Amarela', tag: 'Metrô' },
@@ -536,7 +546,7 @@
         { nome: 'Bilhete Único',             url: 'https://www.sptrans.com.br/bilhete-unico/', desc: 'Saldo, extrato e segunda via do cartão', tag: 'SPTrans' },
         { nome: 'Voos sobre GRU / CGH',      url: 'https://www.flightradar24.com/?lat=-23.43&lng=-46.47&z=9', desc: 'Voos em tempo real — Flightradar24', tag: 'Flightradar24' },
       ]},
-      { secao: 'Rodovias', tipo: 'tipo-transporte', links: [
+      { secao: 'Rodovias', tipo: 'sec-rodovias', links: [
         { nome: 'Anhanguera / Bandeirantes', url: 'https://rodovias.motiva.com.br/autoban/', desc: 'SP-330 e SP-348: condições de tráfego ao vivo', tag: 'AutoBan' },
         { nome: 'Castello / Raposo',         url: 'https://rodovias.motiva.com.br/viaoeste/', desc: 'SP-280 Castello Branco e SP-270 Raposo Tavares', tag: 'ViaOeste' },
         { nome: 'Rodoanel',                  url: 'https://rodovias.motiva.com.br/rodoanel/', desc: 'Anel viário metropolitano de São Paulo', tag: 'Motiva' },
@@ -545,7 +555,7 @@
         { nome: 'Régis Bittencourt',         url: 'https://www.arteris.com.br/nossas-rodovias/regis-bittencourt/', desc: 'BR-116 sentido Curitiba — Planalto e Serra', tag: 'Arteris' },
         { nome: 'Rodovias estaduais',        url: 'https://www.der.sp.gov.br/', desc: 'Condições das rodovias estaduais não concedidas', tag: 'DER-SP' },
       ]},
-      { secao: 'Água, energia & alertas', tipo: 'tipo-infra', links: [
+      { secao: 'Água, energia & alertas', tipo: 'sec-agua', links: [
         { nome: 'Mananciais',       url: 'https://mananciais.sabesp.com.br/', desc: 'Níveis dos reservatórios: Cantareira, Alto Tietê, Guarapiranga…', tag: 'SABESP' },
         { nome: 'SABESP',           url: 'https://site.sabesp.com.br/', desc: 'Portal oficial com dados de abastecimento', tag: 'Portal' },
         { nome: 'Falta de energia', url: 'https://www.enel.com.br/pt-saopaulo/Informativos/mapa-falta-de-luz.html', desc: 'Mapa de ocorrências e previsão de restabelecimento', tag: 'ENEL' },
