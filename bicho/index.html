@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Garoa — Monitor SP</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💧</text></svg>">
+  <style>
+    /* Mesma paleta do painel (index.html → TOKENS) */
+    :root {
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --bg-body: #faf9f6;
+      --bg-card: #fffefb;
+      --text-main: #2b2a28;
+      --text-muted: #8a8579;
+      --border-color: #e6e3dc;
+      --accent: #0060df;
+      --chuva: #4a7fb5;
+      --radius: 12px;
+      /* bicho */
+      --corpo: #9fd0ee;
+      --corpo-calor: #f5b59a;
+      --corpo-frio: #c9e3f7;
+      --traco: #2b3a4a;
+      --bochecha: #f28b9b;
+      --cachecol: #c1440e;
+      --guarda-chuva: #c98a2c;
+      --fumaca: #9c968a;
+    }
+    body.dark-theme {
+      --bg-body: #221f1c;
+      --bg-card: #29251f;
+      --text-main: #e8e4dc;
+      --text-muted: #9c968a;
+      --border-color: #3a362f;
+      --accent: #6ea8fe;
+      --chuva: #7fb0e0;
+      --corpo: #7fb6d9;
+      --corpo-calor: #e09a7c;
+      --corpo-frio: #a9cbe6;
+      --traco: #1b2530;
+      --cachecol: #e8825a;
+      --guarda-chuva: #dba955;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--bg-body);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 16px;
+    }
+    main { width: 100%; max-width: 460px; display: flex; flex-direction: column; gap: 14px; }
+
+    .topo { display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
+    .topo a { color: var(--text-muted); text-decoration: none; }
+    .topo a:hover { color: var(--accent); }
+    .topo h1 { font-size: 18px; margin: 0; }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 16px;
+    }
+
+    /* ---------- palco do bicho ---------- */
+    .palco { text-align: center; }
+    .bicho { width: 220px; max-width: 70%; height: auto; overflow: visible; }
+    .fala {
+      position: relative;
+      margin: 8px auto 0;
+      padding: 10px 14px;
+      background: var(--bg-body);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      font-size: 15px;
+      line-height: 1.4;
+      max-width: 340px;
+    }
+    .fala::before {
+      content: ""; position: absolute; top: -7px; left: 50%;
+      width: 12px; height: 12px; margin-left: -6px;
+      background: inherit; border-left: inherit; border-top: inherit;
+      transform: rotate(45deg);
+    }
+    .leituras { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-top: 12px; }
+    .chip {
+      font-size: 12px; color: var(--text-muted);
+      border: 1px solid var(--border-color); border-radius: 999px; padding: 3px 9px;
+    }
+
+    /* ---------- partes do SVG: escondidas por padrão, ligadas por classe ---------- */
+    .bicho .p { display: none; }
+    .bicho .traco { fill: none; stroke: var(--traco); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+    .bicho .corpo { fill: var(--corpo); stroke: var(--traco); stroke-width: 4; transition: fill .6s; }
+    .bicho.acc-calor .corpo { fill: var(--corpo-calor); }
+    .bicho.acc-frio  .corpo { fill: var(--corpo-frio); }
+
+    /* olhos */
+    .bicho .olhos-abertos { display: inline; }
+    .humor-tosse .olhos-abertos, .humor-dormindo .olhos-abertos { display: none; }
+    .humor-tosse .olhos-apertados { display: inline; }
+    .humor-dormindo .olhos-fechados { display: inline; }
+
+    /* bocas */
+    .humor-feliz .boca-feliz,
+    .humor-chuva .boca-reta,
+    .humor-tosse .boca-o,
+    .humor-calor .boca-cansada,
+    .humor-frio  .boca-tremendo,
+    .humor-dormindo .boca-dormindo { display: inline; }
+    .humor-feliz .bochechas, .humor-calor .bochechas { display: inline; }
+
+    /* acessórios */
+    .acc-chuva .guarda-chuva,
+    .acc-calor .suor,
+    .acc-frio  .cachecol,
+    .acc-tosse .fumaca,
+    .acc-dormindo .zzz { display: inline; }
+
+    /* ---------- animações ---------- */
+    .bicho .inteiro { transform-origin: 100px 200px; animation: respira 3.2s ease-in-out infinite; }
+    .humor-frio .inteiro { animation: treme .15s linear infinite; }
+    .humor-dormindo .inteiro { animation-duration: 5s; }
+    .guarda-chuva { transform-origin: 100px 40px; animation: balanca 4s ease-in-out infinite; }
+    .pingo { animation: pinga 1.2s linear infinite; }
+    .pingo:nth-of-type(2) { animation-delay: .4s; }
+    .pingo:nth-of-type(3) { animation-delay: .8s; }
+    .fumaca circle { animation: tosse 1.8s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+    .zzz text { animation: flutua 3s ease-in-out infinite; }
+    .zzz text:nth-child(2) { animation-delay: 1s; }
+    .suor { animation: pinga-suor 2s ease-in infinite; }
+
+    @keyframes respira { 0%,100% { transform: scale(1, 1); } 50% { transform: scale(1.03, .97); } }
+    @keyframes treme   { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-1.5px); } 75% { transform: translateX(1.5px); } }
+    @keyframes balanca { 0%,100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+    @keyframes pinga   { from { transform: translateY(-14px); opacity: 0; } 30% { opacity: 1; } to { transform: translateY(18px); opacity: 0; } }
+    @keyframes tosse   { 0% { transform: scale(.4); opacity: 0; } 30% { opacity: .8; } 100% { transform: scale(1.3) translate(8px, -4px); opacity: 0; } }
+    @keyframes flutua  { 0%,100% { transform: translateY(0); opacity: .4; } 50% { transform: translateY(-8px); opacity: 1; } }
+    @keyframes pinga-suor { 0% { transform: translateY(0); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(14px); opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .bicho * { animation: none !important; } }
+
+    /* ---------- controles ---------- */
+    .botoes { display: flex; flex-wrap: wrap; gap: 8px; }
+    button, select {
+      font: inherit; font-size: 14px; color: var(--text-main);
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 8px; padding: 8px 12px; cursor: pointer;
+    }
+    button:hover:not(:disabled) { border-color: var(--accent); }
+    button:disabled { cursor: default; opacity: .7; }
+    .botoes button { flex: 1 1 auto; }
+
+    .status { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted); }
+    .ponto { width: 8px; height: 8px; border-radius: 50%; background: var(--text-muted); flex: none; }
+    .ponto.vivo { background: #27ae60; animation: pulsa 2s infinite; }
+    .ponto.checando { background: #fbbf24; }
+    .ponto.parado { background: #fbbf24; }
+    .ponto.erro { background: #e74c3c; }
+    @keyframes pulsa { 50% { opacity: .35; } }
+
+    .aviso, .nota { font-size: 13px; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); }
+    .aviso { background: var(--bg-card); }
+    .nota { color: var(--text-muted); }
+
+    details summary { cursor: pointer; font-size: 14px; font-weight: 600; }
+    details[open] summary { margin-bottom: 10px; }
+    .diario { list-style: none; margin: 0; padding: 0; font-size: 13px; display: flex; flex-direction: column; gap: 6px; }
+    .diario em { color: var(--text-muted); font-style: normal; }
+    .diario .vazio { color: var(--text-muted); }
+    .diario-hora { color: var(--text-muted); font-variant-numeric: tabular-nums; margin-right: 4px; }
+    .config { font-size: 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .config select { padding: 4px 8px; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="topo">
+      <a href="../">← Monitor SP</a>
+      <h1>Garoa</h1>
+      <span></span>
+    </div>
+
+    <section class="card palco">
+      <!-- O bicho: as partes com classe "p" só aparecem quando a classe de humor/acessório pede -->
+      <svg id="bicho" class="bicho humor-feliz" viewBox="-20 -40 240 260" role="img" aria-label="Garoa, o bichinho">
+        <!-- guarda-chuva (fica atrás do corpo) -->
+        <g class="p guarda-chuva">
+          <line x1="100" y1="40" x2="100" y2="110" stroke="var(--traco)" stroke-width="4" />
+          <path d="M28 40 Q100 -40 172 40 Q154 28 136 40 Q118 28 100 40 Q82 28 64 40 Q46 28 28 40 Z"
+                fill="var(--guarda-chuva)" stroke="var(--traco)" stroke-width="4" stroke-linejoin="round" />
+          <g fill="var(--chuva)">
+            <path class="pingo" d="M14 46 q4 7 0 10 q-4 -3 0 -10 Z" />
+            <path class="pingo" d="M186 50 q4 7 0 10 q-4 -3 0 -10 Z" />
+            <path class="pingo" d="M0 30 q4 7 0 10 q-4 -3 0 -10 Z" />
+          </g>
+        </g>
+
+        <g class="inteiro">
+          <!-- corpo em forma de gota -->
+          <path class="corpo" d="M100 22 C100 22 160 92 160 140 A60 60 0 0 1 40 140 C40 92 100 22 100 22 Z" />
+
+          <!-- olhos -->
+          <g class="olhos-abertos">
+            <ellipse cx="80" cy="132" rx="6" ry="8" fill="var(--traco)" />
+            <ellipse cx="120" cy="132" rx="6" ry="8" fill="var(--traco)" />
+            <circle cx="82" cy="129" r="2" fill="#fff" />
+            <circle cx="122" cy="129" r="2" fill="#fff" />
+          </g>
+          <g class="p olhos-fechados traco">
+            <path d="M72 134 q8 6 16 0" />
+            <path d="M112 134 q8 6 16 0" />
+          </g>
+          <g class="p olhos-apertados traco">
+            <path d="M73 126 l13 6 l-13 6" />
+            <path d="M127 126 l-13 6 l13 6" />
+          </g>
+
+          <!-- bochechas -->
+          <g class="p bochechas" fill="var(--bochecha)" opacity=".45">
+            <ellipse cx="66" cy="152" rx="9" ry="5" />
+            <ellipse cx="134" cy="152" rx="9" ry="5" />
+          </g>
+
+          <!-- bocas -->
+          <path class="p traco boca-feliz" d="M88 156 q12 13 24 0" />
+          <path class="p traco boca-reta" d="M90 162 h20" />
+          <ellipse class="p boca-o" cx="100" cy="163" rx="6" ry="7" fill="var(--traco)" />
+          <path class="p traco boca-cansada" d="M88 165 q12 -9 24 0" />
+          <path class="p traco boca-tremendo" d="M84 163 l5 -3 l5 3 l5 -3 l5 3 l5 -3 l5 3 l5 -3" />
+          <path class="p traco boca-dormindo" d="M94 162 q6 4 12 0" />
+
+          <!-- cachecol -->
+          <g class="p cachecol" fill="var(--cachecol)" stroke="var(--traco)" stroke-width="3" stroke-linejoin="round">
+            <path d="M118 182 l6 30 l14 -3 l-4 -30 Z" />
+            <path d="M44 170 Q100 190 156 170 L158 184 Q100 204 42 184 Z" />
+          </g>
+
+          <!-- suor -->
+          <g class="p suor" fill="var(--chuva)">
+            <path d="M152 104 q6 10 0 14 q-6 -4 0 -14 Z" />
+            <path d="M50 112 q5 8 0 11 q-5 -3 0 -11 Z" />
+          </g>
+        </g>
+
+        <!-- nuvem de tosse -->
+        <g class="p fumaca" fill="var(--fumaca)">
+          <circle cx="132" cy="168" r="7" />
+          <circle cx="146" cy="160" r="9" />
+          <circle cx="160" cy="170" r="7" />
+        </g>
+
+        <!-- zzz -->
+        <g class="p zzz" fill="var(--text-muted)" font-family="var(--font-sans)" font-weight="700">
+          <text x="140" y="80" font-size="18">z</text>
+          <text x="156" y="58" font-size="26">Z</text>
+        </g>
+      </svg>
+
+      <div class="fala" id="fala">Acordando…</div>
+      <div class="leituras" id="leituras"></div>
+    </section>
+
+    <div class="botoes">
+      <button id="btn-permissao" type="button">🔔 Ativar notificações</button>
+      <button id="btn-testar" type="button">Testar alerta</button>
+      <button id="btn-checar" type="button" title="Busca clima e ar agora">↻ Checar agora</button>
+    </div>
+
+    <div class="aviso" id="aviso" role="status" hidden></div>
+    <div class="nota" id="nota-celular" hidden>
+      📱 No celular o navegador congela abas em segundo plano: o Garoa só avisa enquanto esta página estiver aberta na tela.
+    </div>
+
+    <div class="status"><span class="ponto" id="status-ponto"></span><span id="status">ainda não checou</span></div>
+
+    <details class="card">
+      <summary>Diário</summary>
+      <ul class="diario" id="diario"></ul>
+    </details>
+
+    <details class="card">
+      <summary>Configurações</summary>
+      <div class="config">
+        <label><input type="checkbox" id="cfg-silencio"> Horário de silêncio</label>
+        das <select id="cfg-de" aria-label="Início do silêncio"></select>
+        às <select id="cfg-ate" aria-label="Fim do silêncio"></select>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary>Prévia dos humores</summary>
+      <div class="botoes">
+        <button type="button" data-previa="feliz">😊 Feliz</button>
+        <button type="button" data-previa="chuva">☂️ Chuva</button>
+        <button type="button" data-previa="tosse">😷 Tosse</button>
+        <button type="button" data-previa="calor">🥵 Calor</button>
+        <button type="button" data-previa="frio">🥶 Frio</button>
+        <button type="button" data-previa="dormindo">😴 Dormindo</button>
+        <button type="button" data-previa="real">↩ Voltar ao real</button>
+      </div>
+    </details>
+  </main>
+
+  <script src="bicho.js"></script>
+</body>
+</html>
