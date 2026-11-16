@@ -244,6 +244,14 @@ function enviarNotificacao(eventos, { teste = false } = {}) {
   try {
     const n = new Notification(titulo, { body: corpo, tag, renotify: true });
     n.onclick = () => { window.focus(); n.close(); };
+    // "show" só dispara se o navegador/sistema realmente exibiu; "error" se recusou.
+    // Se nenhum dos dois vier, o sistema operacional provavelmente engoliu a notificação.
+    let exibida = false;
+    n.onshow = () => { exibida = true; if (teste) mostrarAviso('✅ O navegador confirmou que exibiu a notificação.'); };
+    n.onerror = () => mostrarAviso('❌ O navegador recusou a notificação (veja as permissões do site).');
+    if (teste) setTimeout(() => {
+      if (!exibida) mostrarAviso('⚠️ Sem confirmação de exibição. Confira se as notificações do navegador estão ligadas no Windows e se o "Não perturbe" está desligado.');
+    }, 3000);
     return true;
   } catch (e) {
     // No Chrome Android o construtor não é permitido (exigiria service worker)
@@ -388,7 +396,7 @@ function desenharDiario() {
   if (!diario.length) { lista.innerHTML = '<li class="vazio">Nada aconteceu ainda.</li>'; return; }
   lista.innerHTML = diario.map(d => {
     const data = new Date(d.ts).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
-    const obs = d.motivo === 'silêncio' ? ' <em>(silêncio)</em>' : d.motivo === 'repetido' ? ' <em>(sem notificar: repetido)</em>' : '';
+    const obs = d.motivo === 'silêncio' ? ' <em>(silêncio)</em>' : d.motivo === 'repetido' ? ' <em>(sem notificar: repetido)</em>' : ' <em>🔔</em>';
     return `<li><span class="diario-hora">${data} ${hora(d.ts)}</span> ${d.emoji} ${d.texto}${obs}</li>`;
   }).join('');
 }
@@ -432,7 +440,7 @@ async function testarAlerta() {
   }
   // o teste ignora cooldown e horário de silêncio
   const ok = enviarNotificacao([{ tipo: 'teste', emoji: '🐣', texto: 'Oi! Sou o Garoa. É assim que eu vou te avisar das coisas.' }], { teste: true });
-  if (ok) mostrarAviso('Alerta de teste enviado!');
+  if (ok) mostrarAviso('Alerta de teste enviado… aguardando confirmação do navegador.');
 }
 
 function iniciarConfig() {
